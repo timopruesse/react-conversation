@@ -6,9 +6,6 @@ module.exports = {
   entry: './src/index.tsx',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    alias: {
-      'react-conversation': path.resolve(__dirname, '../dist'),
-    },
   },
   output: {
     path: path.join(__dirname, '/dist'),
