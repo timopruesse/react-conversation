@@ -1,0 +1,58 @@
+{
+  "name": "react-conversation",
+  "description": "Hooks to help you build conversations between your app and the user.",
+  "author": {
+    "name": "Timo Prüße",
+    "email": "chroma91@gmail.com"
+  },
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.tsx",
+  "sideEffects": "false",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "conversational interface",
+    "chatbot",
+    "chat",
+    "bot",
+    "conversation"
+  ],
+  "scripts": {
+    "build": "rm -rf ./dist && microbundle-crl --no-compress --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "prepublishOnly": "yarn lint && yarn test && yarn build",
+    "lint": "eslint --fix --ext=.ts,.tsx src",
+    "test": "CI=1 yarn jest",
+    "test:watch": "yarn jest --watch"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "@types/react": "^16.8.24",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.4",
+    "eslint-plugin-jest": "^23.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "microbundle-crl": "^0.13.11",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.3",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.6",
+    "react-test-renderer": "^16.13.1"
+  }
+}
