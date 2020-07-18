@@ -3,8 +3,10 @@ import {
   useMessages,
   MessageType,
   useSendMessage,
-  MessageCollection,
-  Message,
+  MessageBot,
+  useOnBotMessage,
+  useOnUserMessage,
+  MessageUser,
 } from 'react-conversation'
 import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
@@ -46,6 +48,16 @@ const Example = () => {
     },
     [sendMessage, text, type, mood],
   )
+
+  const [lastBotMessage, setLastBotMessage] = React.useState<MessageBot<
+    MessageMetadata
+  > | null>(null)
+  const [lastUserMessage, setLastUserMessage] = React.useState<MessageUser<
+    MessageMetadata
+  > | null>(null)
+
+  useOnBotMessage(setLastBotMessage)
+  useOnUserMessage(setLastUserMessage)
 
   return (
     <div style={{ padding: 22, backgroundColor: '#E8E8E8' }}>
@@ -113,7 +125,21 @@ const Example = () => {
           </button>
         </form>
       </div>
-      <div>
+      <div
+        style={{
+          backgroundColor: '#282828',
+          color: '#85e085',
+          marginBottom: 16,
+          fontWeight: 'bold',
+          padding: 16,
+        }}
+      >
+        <div>Last Bot Message: "{lastBotMessage?.text || 'N/A'}"</div>
+        <div style={{ paddingBottom: 8 }}>
+          Last User Message: "{lastUserMessage?.text || 'N/A'}"
+        </div>
+      </div>
+      <div style={{ marginTop: 32, paddingTop: 16, borderTop: '1px solid' }}>
         <div>
           Icons used in this example are from:
           <ul>

@@ -1,3 +1,5 @@
 export * from './conversation/context'
 export { default as useMessages } from './conversation/useMessages'
 export { default as useSendMessage } from './conversation/useSendMessage'
+export { default as useOnBotMessage } from './conversation/useOnBotMessage'
+export { default as useOnUserMessage } from './conversation/useOnUserMessage'
