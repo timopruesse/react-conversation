@@ -77,6 +77,7 @@ function ConversationProvider<T>({
             },
           }
         default:
+          /* istanbul ignore next */
           return state
       }
     },

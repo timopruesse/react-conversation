@@ -28,7 +28,8 @@
     "prepublishOnly": "yarn lint && yarn test && yarn build",
     "lint": "eslint --fix --ext=.ts,.tsx src",
     "test": "yarn jest",
-    "test:watch": "yarn jest --watch"
+    "test:watch": "yarn jest --watch",
+    "coverage": "yarn jest --coverage"
   },
   "peerDependencies": {
     "react": "^16.13.1",
