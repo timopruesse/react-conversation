@@ -41,7 +41,7 @@ const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
 
 describe('useMessages', () => {
   it('gets all of the messages in the correct order', () => {
-    let messages: MessageCollection<unknown, Message<unknown>> | null = null
+    let messages: MessageCollection<unknown, Message<unknown>> | undefined
 
     const Component = () => {
       messages = useMessages()
