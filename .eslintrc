@@ -32,7 +32,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*.test.ts"] }
+      { "devDependencies": ["**/*.test.ts", "**/*.test.tsx"] }
     ],
     "react/jsx-filename-extension": [
       "warn",
