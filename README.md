@@ -9,13 +9,13 @@
 ### Yarn
 
 ```bash
-yarn add react-conversation
+yarn add @chroma91/react-conversation
 ```
 
 ### NPM
 
 ```bash
-npm install react-conversation
+npm install @chroma91/react-conversation
 ```
 
 ### Usage
