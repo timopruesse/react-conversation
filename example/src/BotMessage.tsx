@@ -1,13 +1,14 @@
 import React from 'react'
 import BotIcon from './bot.svg'
 import { MessageBot } from '../../dist'
+import { MessageMetadata } from './Example'
 
 interface Props {
   timestamp: number
-  message: MessageBot<unknown>
+  message: MessageBot<MessageMetadata>
 }
 
-const BotMessage = ({ timestamp, message: { text } }: Props) => {
+const BotMessage = ({ timestamp, message: { text, meta } }: Props) => {
   return (
     <div
       style={{
@@ -23,12 +24,26 @@ const BotMessage = ({ timestamp, message: { text } }: Props) => {
       }}
     >
       <div style={{ padding: 16 }}>
-        "{text}"{' '}
-        <span style={{ fontWeight: 'bold', marginLeft: 4 }}>
-          {new Date(timestamp).toLocaleString()}
-        </span>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 'bold',
+              borderBottom: '1px dotted',
+              marginBottom: 4,
+            }}
+          >
+            {new Date(timestamp).toLocaleString()}
+          </span>
+          <span style={{ fontStyle: 'italic' }}>*{meta?.mood}*</span>"{text}"
+        </div>
       </div>
-      <img src={BotIcon} alt="Bot icon" style={{ height: 48 }} />
+      <img src={BotIcon} alt="Bot icon" style={{ height: 80 }} />
     </div>
   )
 }

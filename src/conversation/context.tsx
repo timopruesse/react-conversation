@@ -45,19 +45,19 @@ export const ConversationContext = React.createContext<ConversationContextType>(
   defaultContext,
 )
 
-interface MessagePushAction<T = unknown> {
-  type: 'messagePush'
+interface MessageSendAction<T = unknown> {
+  type: 'messageSend'
   message: Message<T>
 }
 
-type ConversationAction = MessagePushAction
+type ConversationAction = MessageSendAction
 
 const conversationReducer: React.Reducer<Conversation, ConversationAction> = (
   state,
   action,
 ) => {
   switch (action.type) {
-    case 'messagePush':
+    case 'messageSend':
       if (action.message.type === 'bot') {
         return {
           userMessages: state.userMessages,

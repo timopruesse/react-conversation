@@ -1,13 +1,14 @@
 import React from 'react'
 import UserIcon from './user.svg'
 import { MessageBot } from '../../dist'
+import { MessageMetadata } from './Example'
 
 interface Props {
   timestamp: number
-  message: MessageBot<unknown>
+  message: MessageBot<MessageMetadata>
 }
 
-const BotMessage = ({ timestamp, message: { text } }: Props) => {
+const BotMessage = ({ timestamp, message: { text, meta } }: Props) => {
   return (
     <div
       style={{
@@ -22,12 +23,29 @@ const BotMessage = ({ timestamp, message: { text } }: Props) => {
           '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
       }}
     >
-      <img src={UserIcon} alt="User icon" style={{ height: 48 }} />
+      <img src={UserIcon} alt="User icon" style={{ height: 80 }} />
       <div style={{ padding: 16 }}>
-        <span style={{ fontWeight: 'bold', marginRight: 4 }}>
-          {new Date(timestamp).toLocaleString()}
-        </span>{' '}
-        "{text}"
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 'bold',
+              borderBottom: '1px dotted',
+              marginBottom: 4,
+            }}
+          >
+            {new Date(timestamp).toLocaleString()}
+          </span>{' '}
+          <span style={{ fontStyle: 'italic', marginBottom: 4 }}>
+            *{meta?.mood}*
+          </span>{' '}
+          "{text}"
+        </div>
       </div>
     </div>
   )

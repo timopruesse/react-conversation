@@ -1,15 +1,15 @@
 import React from 'react'
-import {
-  useMessages,
-  ConversationContext,
-  MessageType,
-} from 'react-conversation'
+import { useMessages, MessageType, useSendMessage } from 'react-conversation'
 import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
 
+export interface MessageMetadata {
+  mood: 'happy' | 'angry' | 'tired'
+}
+
 const Example = () => {
-  const { dispatch } = React.useContext(ConversationContext)
-  const messages = useMessages()
+  const messages = useMessages<MessageMetadata>()
+  const sendMessage = useSendMessage<MessageMetadata>()
 
   const [text, setText] = React.useState('')
   const onChangeText = React.useCallback((event) => {
@@ -21,19 +21,24 @@ const Example = () => {
     setType(event.target.value)
   }, [])
 
+  const [mood, setMood] = React.useState<MessageMetadata['mood']>('happy')
+  const onChangeMood = React.useCallback((event) => {
+    setMood(event.target.value)
+  }, [])
+
   const onSend = React.useCallback(
     (event) => {
       event.preventDefault()
 
-      dispatch({
-        type: 'messagePush',
-        message: {
-          text,
-          type,
+      sendMessage({
+        text,
+        type,
+        meta: {
+          mood,
         },
       })
     },
-    [dispatch, text, type],
+    [sendMessage, text, type, mood],
   )
 
   return (
@@ -81,6 +86,14 @@ const Example = () => {
           >
             <option value="user">User</option>
             <option value="bot">Bot</option>
+          </select>
+          <select
+            onChange={onChangeMood}
+            style={{ padding: 4, marginRight: 16 }}
+          >
+            <option value="happy">Happy</option>
+            <option value="angry">Angry</option>
+            <option value="tired">Tired</option>
           </select>
           <button
             type="submit"
