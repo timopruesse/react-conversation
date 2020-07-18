@@ -28,6 +28,7 @@
     "react/prop-types": "off",
     "prettier/prettier": "error",
     "react/jsx-one-expression-per-line": "off",
+    "react/no-unescaped-entities": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/no-extraneous-dependencies": [
       "error",

@@ -20,6 +20,7 @@
     "babel-loader": "^8.1.0",
     "concurrently": "^5.2.0",
     "source-map-loader": "^1.0.1",
+    "svg-url-loader": "^6.0.0",
     "ts-loader": "^8.0.1",
     "typescript": "^3.9.7",
     "webpack": "^4.43.0",
