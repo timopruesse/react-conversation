@@ -5,7 +5,7 @@
     "name": "Timo Prüße",
     "email": "chroma91@gmail.com"
   },
-  "version": "0.0.1",
+  "version": "1.0.0-beta01",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.ts",
