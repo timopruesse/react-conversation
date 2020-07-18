@@ -5,8 +5,10 @@
     "start": "cp ./src/index.html ./dist/index.html && concurrently \"yarn webpack --watch\" \"npx serve dist\""
   },
   "dependencies": {
+    "react-conversation": "link:.."
+  },
+  "peerDependencies": {
     "react": "^16.13.1",
-    "react-conversation": "link:..",
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
