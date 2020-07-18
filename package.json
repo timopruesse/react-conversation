@@ -6,6 +6,9 @@
     "email": "chroma91@gmail.com"
   },
   "version": "1.0.0-beta01",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.ts",
