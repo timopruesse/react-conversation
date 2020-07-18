@@ -1,11 +1,11 @@
 import React from 'react'
 import UserIcon from './user.svg'
-import { MessageBot } from '../../dist'
+import { MessageUser } from '../../dist'
 import { MessageMetadata } from './Example'
 
 interface Props {
   timestamp: number
-  message: MessageBot<MessageMetadata>
+  message: MessageUser<MessageMetadata>
 }
 
 const BotMessage = ({ timestamp, message: { text, meta } }: Props) => {

@@ -1,5 +1,11 @@
 import React from 'react'
-import { useMessages, MessageType, useSendMessage } from 'react-conversation'
+import {
+  useMessages,
+  MessageType,
+  useSendMessage,
+  MessageCollection,
+  Message,
+} from 'react-conversation'
 import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
 
