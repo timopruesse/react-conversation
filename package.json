@@ -1,5 +1,5 @@
 {
-  "name": "react-conversation",
+  "name": "@chroma91/react-conversation",
   "description": "Hooks to help you build conversations between your app and the user.",
   "author": {
     "name": "Timo Prüße",
