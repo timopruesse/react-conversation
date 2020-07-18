@@ -1,5 +1,9 @@
 # react-conversation
 
+> This package only includes react hooks that you can use in your own components.  
+> There are no UI components in here.  
+> Check out the example app for some 'inspiration' 😁
+
 ## Installation
 
 ### Yarn
