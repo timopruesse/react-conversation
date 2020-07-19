@@ -62,7 +62,17 @@ interface MessageEditAction<T> {
   }
 }
 
-type ConversationAction<T> = MessageSendAction<T> | MessageEditAction<T>
+interface MessageClearAction {
+  type: 'messageClear'
+  payload: {
+    timestamp: number
+  }
+}
+
+type ConversationAction<T> =
+  | MessageSendAction<T>
+  | MessageEditAction<T>
+  | MessageClearAction
 
 function ConversationProvider<T>({
   children,
@@ -125,6 +135,17 @@ function ConversationProvider<T>({
                 },
               },
             },
+          }
+        case 'messageClear':
+          const { timestamp: clearTimestamp } = action.payload
+
+          return {
+            botMessages: Object.keys(state.botMessages)
+              .filter((ts) => +ts < clearTimestamp)
+              .map((ts) => state.botMessages[ts]),
+            userMessages: Object.keys(state.userMessages)
+              .filter((ts) => +ts < clearTimestamp)
+              .map((ts) => state.userMessages[ts]),
           }
         default:
           /* istanbul ignore next */
