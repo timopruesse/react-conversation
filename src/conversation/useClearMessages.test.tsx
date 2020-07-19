@@ -14,7 +14,9 @@ describe('useClearMessages', () => {
   it('clears messages', () => {
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
     let send: ((message: Message<unknown>) => void) | undefined
-    let clear: ((timestamp: number) => void) | undefined
+    let clear:
+      | ((timestampStart: number, timestampEnd?: number) => void)
+      | undefined
 
     const Component = () => {
       messages = useMessages()
@@ -55,16 +57,25 @@ describe('useClearMessages', () => {
     })
 
     expect(Object.keys(messages || {})).toHaveLength(3)
+    expect(messages).toEqual({
+      4: testUserMessage,
+      5: testUserMessage,
+      6: testUserMessage,
+    })
 
     act(() => {
       if (!clear) {
         throw new Error('Check the correct usage of "useClearMessages"!')
       }
 
-      clear(5)
+      clear(5, 6)
     })
 
-    expect(Object.keys(messages || {})).toHaveLength(1)
+    expect(Object.keys(messages || {})).toHaveLength(2)
+    expect(messages).toEqual({
+      4: testUserMessage,
+      6: testUserMessage,
+    })
 
     Date.now = originalDateNow
   })

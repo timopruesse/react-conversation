@@ -4,11 +4,12 @@ import { ConversationContext } from './context'
 export default function useClearMessages() {
   const { dispatch } = React.useContext(ConversationContext)
 
-  return (timestamp: number) =>
+  return (timestampStart: number, timestampEnd?: number) =>
     dispatch({
       type: 'messageClear',
       payload: {
-        timestamp,
+        timestampStart,
+        timestampEnd,
       },
     })
 }

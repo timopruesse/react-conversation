@@ -65,7 +65,8 @@ interface MessageEditAction<T> {
 interface MessageClearAction {
   type: 'messageClear'
   payload: {
-    timestamp: number
+    timestampStart: number
+    timestampEnd?: number
   }
 }
 
@@ -137,15 +138,35 @@ function ConversationProvider<T>({
             },
           }
         case 'messageClear':
-          const { timestamp: clearTimestamp } = action.payload
+          const { timestampStart, timestampEnd } = action.payload
+
+          const isInRange = (ts: string) => {
+            const numericTs = +ts
+
+            if (timestampEnd) {
+              return numericTs < timestampStart || numericTs >= timestampEnd
+            }
+
+            return numericTs < timestampStart
+          }
 
           return {
             botMessages: Object.keys(state.botMessages)
-              .filter((ts) => +ts < clearTimestamp)
-              .map((ts) => state.botMessages[ts]),
+              .filter(isInRange)
+              .reduce((previous, current) => {
+                return {
+                  ...previous,
+                  [current]: state.botMessages[current],
+                }
+              }, {}),
             userMessages: Object.keys(state.userMessages)
-              .filter((ts) => +ts < clearTimestamp)
-              .map((ts) => state.userMessages[ts]),
+              .filter(isInRange)
+              .reduce((previous, current) => {
+                return {
+                  ...previous,
+                  [current]: state.userMessages[current],
+                }
+              }, {}),
           }
         default:
           /* istanbul ignore next */

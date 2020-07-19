@@ -1,15 +1,15 @@
 import React from 'react'
 import {
-  MessageType,
   useEditMessage,
   useMessages,
-  Message,
+  useClearMessages,
 } from 'react-conversation'
 import { MessageMetadata } from './Example'
 
 const EditForm = () => {
   const messages = useMessages<MessageMetadata>()
   const editMessage = useEditMessage<MessageMetadata>()
+  const clearMessages = useClearMessages()
 
   const [text, setText] = React.useState('')
   const onChangeText = React.useCallback((event) => {
@@ -46,6 +46,14 @@ const EditForm = () => {
     [selectedTimestamp, editMessage, text, mood],
   )
 
+  const onDelete = React.useCallback(() => {
+    if (!selectedTimestamp) {
+      return
+    }
+
+    clearMessages(selectedTimestamp, selectedTimestamp + 1)
+  }, [clearMessages, selectedTimestamp])
+
   return (
     <form onSubmit={onEdit}>
       <div>Edit a message</div>
@@ -80,6 +88,18 @@ const EditForm = () => {
         }}
       >
         Update
+      </button>
+      <button
+        type="button"
+        style={{
+          marginLeft: 8,
+          padding: '8px 16px',
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+        }}
+        onClick={onDelete}
+      >
+        Delete
       </button>
     </form>
   )
