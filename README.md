@@ -45,7 +45,7 @@ In the examples `MessageMetadata` will be used as a placeholder.
 
 #### Get a collection of all the messages
 
-> The messages are sorted by their timestamp.
+> The messages are sorted by their respective timestamps.
 
 ```ts
 const messages = useMessages<MessageMetadata>()
@@ -61,6 +61,18 @@ const messages = {
     /* message */
   },
 }
+```
+
+##### Only get bot messages
+
+```ts
+const botMessages = useBotMessages<MessageMetadata>()
+```
+
+##### Only get user messages
+
+```ts
+const userMessages = useUserMessages<MessageMetadata>()
 ```
 
 #### Send a message
