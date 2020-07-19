@@ -51,7 +51,10 @@ const EditForm = () => {
       return
     }
 
-    clearMessages(selectedTimestamp, selectedTimestamp + 1)
+    const olderDate = new Date(+selectedTimestamp)
+    olderDate.setMilliseconds(olderDate.getMilliseconds() + 1)
+
+    clearMessages(selectedTimestamp, olderDate.valueOf())
   }, [clearMessages, selectedTimestamp])
 
   return (

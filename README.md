@@ -128,8 +128,7 @@ editMessage(
 There is a small example app where you can see the hooks in action.  
 Feel free to check out the source code to see how it works.
 
-1. Execute `yarn start` in the root directory
-2. Open another terminal session
-   1. `cd example`
-   2. Execute `yarn start`
-3. Open `localhost:5000` in any browser
+1. Execute `yarn build` in the root directory
+2. `cd example`
+3. Execute `yarn start`
+4. Open `localhost:5000` in any browser
