@@ -159,7 +159,11 @@ function ConversationProvider<T>({
         case 'messageEdit':
           const { timestamp, update } = action.payload
           const currentMessage = (state.botMessages[timestamp] ||
-            state.userMessages[timestamp]) as Message<T>
+            state.userMessages[timestamp]) as Message<T> | undefined
+
+          if (!currentMessage) {
+            return state
+          }
 
           if (currentMessage.type === 'bot') {
             return {
