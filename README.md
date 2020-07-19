@@ -101,6 +101,28 @@ useOnUserMessage((message: MessageUser<MessageMetadata>) => {
 })
 ```
 
+#### Edit a message
+
+It is possible to update the text or the metadata of a message (or both at the same time).  
+You need to provide the timestamp of the message you want to edit.
+
+```ts
+const editMessage = useEditMessage<MessageMetadata>()
+
+// update a message
+editMessage(
+  /* timestamp of the message you want to edit */
+  1337,
+  /* Partial message data */
+  {
+    text: 'Hello human!',
+    meta: {
+      /* optional */
+    },
+  },
+)
+```
+
 ### Example
 
 There is a small example app where you can see the hooks in action.  
