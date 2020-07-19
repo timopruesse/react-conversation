@@ -115,7 +115,7 @@ editMessage(
   1337,
   /* Partial message data */
   {
-    text: 'Hello human!',
+    text: 'Hello world!' /* optional */,
     meta: {
       /* optional */
     },
