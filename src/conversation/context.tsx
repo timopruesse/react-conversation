@@ -47,10 +47,22 @@ export const ConversationContext = React.createContext<
 
 interface MessageSendAction<T> {
   type: 'messageSend'
-  message: Message<T>
+  payload: {
+    message: Message<T>
+  }
 }
 
-type ConversationAction<T> = MessageSendAction<T>
+export type MessageUpdate<T> = DeepPartial<Omit<Message<T>, 'type'>>
+
+interface MessageEditAction<T> {
+  type: 'messageEdit'
+  payload: {
+    timestamp: number
+    update: MessageUpdate<T>
+  }
+}
+
+type ConversationAction<T> = MessageSendAction<T> | MessageEditAction<T>
 
 function ConversationProvider<T>({
   children,
@@ -59,12 +71,14 @@ function ConversationProvider<T>({
     (state: Conversation<T>, action: ConversationAction<T>) => {
       switch (action.type) {
         case 'messageSend':
-          if (action.message.type === 'bot') {
+          const { message } = action.payload
+
+          if (message.type === 'bot') {
             return {
               userMessages: state.userMessages,
               botMessages: {
                 ...state.botMessages,
-                [Date.now()]: action.message,
+                [Date.now()]: message,
               },
             }
           }
@@ -73,7 +87,43 @@ function ConversationProvider<T>({
             botMessages: state.botMessages,
             userMessages: {
               ...state.userMessages,
-              [Date.now()]: action.message,
+              [Date.now()]: message,
+            },
+          }
+        case 'messageEdit':
+          const { timestamp, update } = action.payload
+          const currentMessage = (state.botMessages[timestamp] ||
+            state.userMessages[timestamp]) as Message<T>
+
+          if (currentMessage.type === 'bot') {
+            return {
+              userMessages: state.userMessages,
+              botMessages: {
+                ...state.botMessages,
+                [`${timestamp}`]: {
+                  type: currentMessage.type,
+                  text: update.text || currentMessage.text,
+                  meta: {
+                    ...currentMessage.meta,
+                    ...update.meta,
+                  },
+                },
+              },
+            }
+          }
+
+          return {
+            botMessages: state.botMessages,
+            userMessages: {
+              ...state.userMessages,
+              [`${timestamp}`]: {
+                type: currentMessage.type,
+                text: update.text || currentMessage.text,
+                meta: {
+                  ...currentMessage.meta,
+                  ...update.meta,
+                },
+              },
             },
           }
         default:

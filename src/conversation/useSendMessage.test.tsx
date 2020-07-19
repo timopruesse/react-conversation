@@ -59,7 +59,9 @@ describe('useSendMessage', () => {
     send(testBotMessage)
     expect(messageDispatcher).toHaveBeenCalledWith({
       type: 'messageSend',
-      message: testBotMessage,
+      payload: {
+        message: testBotMessage,
+      },
     })
 
     const testUserMessage: MessageUser<unknown> = {
@@ -73,7 +75,9 @@ describe('useSendMessage', () => {
     send(testUserMessage)
     expect(messageDispatcher).toHaveBeenCalledWith({
       type: 'messageSend',
-      message: testUserMessage,
+      payload: {
+        message: testUserMessage,
+      },
     })
   })
 })

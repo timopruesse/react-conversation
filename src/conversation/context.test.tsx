@@ -14,9 +14,11 @@ describe('context', () => {
       React.useEffect(() => {
         dispatch({
           type: 'messageSend',
-          message: {
-            type: 'bot',
-            text: 'test',
+          payload: {
+            message: {
+              type: 'bot',
+              text: 'test',
+            },
           },
         })
       }, [dispatch])

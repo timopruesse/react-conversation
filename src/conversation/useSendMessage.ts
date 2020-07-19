@@ -7,6 +7,8 @@ export default function useSendMessage<T>() {
   return (message: Message<T>) =>
     dispatch({
       type: 'messageSend',
-      message,
+      payload: {
+        message,
+      },
     })
 }
