@@ -5,7 +5,7 @@
     "name": "Timo Prüße",
     "email": "chroma91@gmail.com"
   },
-  "version": "1.0.0-beta02",
+  "version": "1.0.0-beta03",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
