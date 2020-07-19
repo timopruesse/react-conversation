@@ -62,12 +62,41 @@ interface MessageEditAction<T> {
   }
 }
 
+interface ClearMessageRange {
+  range: { start: number; end?: number }
+}
+
+export type MessageClearPayload = ClearMessageRange | { timestamp: number }
+
+function isTimestampRange(
+  payload: MessageClearPayload,
+): payload is ClearMessageRange {
+  return (payload as ClearMessageRange).range !== undefined
+}
+
+function getMessageClearFilterFn(payload: MessageClearPayload) {
+  if (isTimestampRange(payload)) {
+    const {
+      range: { start, end },
+    } = payload
+
+    return (ts: string) => {
+      const numericTs = +ts
+
+      if (end) {
+        return numericTs < start || numericTs > end
+      }
+
+      return numericTs < start
+    }
+  }
+
+  return (ts: string) => +ts !== payload.timestamp
+}
+
 interface MessageClearAction {
   type: 'messageClear'
-  payload: {
-    timestampStart: number
-    timestampEnd?: number
-  }
+  payload: MessageClearPayload
 }
 
 type ConversationAction<T> =
@@ -138,21 +167,11 @@ function ConversationProvider<T>({
             },
           }
         case 'messageClear':
-          const { timestampStart, timestampEnd } = action.payload
-
-          const isInRange = (ts: string) => {
-            const numericTs = +ts
-
-            if (timestampEnd) {
-              return numericTs < timestampStart || numericTs >= timestampEnd
-            }
-
-            return numericTs < timestampStart
-          }
+          const filterFunc = getMessageClearFilterFn(action.payload)
 
           return {
             botMessages: Object.keys(state.botMessages)
-              .filter(isInRange)
+              .filter(filterFunc)
               .reduce((previous, current) => {
                 return {
                   ...previous,
@@ -160,7 +179,7 @@ function ConversationProvider<T>({
                 }
               }, {}),
             userMessages: Object.keys(state.userMessages)
-              .filter(isInRange)
+              .filter(filterFunc)
               .reduce((previous, current) => {
                 return {
                   ...previous,

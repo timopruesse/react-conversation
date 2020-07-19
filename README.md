@@ -123,6 +123,26 @@ editMessage(
 )
 ```
 
+#### Delete messages
+
+##### Delete a single message
+
+```ts
+const clearMessages = useClearMessages()
+
+// delete the message with the timestamp '1337'
+clearMessages({ timestamp: 1337 })
+```
+
+##### Delete a range of messages
+
+```ts
+const clearMessages = useClearMessages()
+
+// delete messages starting at the timestamp '10' and ending with timestamp '50' (inclusively)
+clearMessages({ range: { start: 10, end: 50 } })
+```
+
 ### Example
 
 There is a small example app where you can see the hooks in action.  
