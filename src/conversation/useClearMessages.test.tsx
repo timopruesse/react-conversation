@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, act } from '@testing-library/react'
+import mockDate from 'mockdate'
 import useSendMessage from './useSendMessage'
 import {
   Message,
@@ -30,38 +31,56 @@ describe('useClearMessages', () => {
       text: 'test',
     }
 
-    const originalDateNow = Date.now
-
     act(() => {
       render(
         <ConversationProvider>
           <Component />
         </ConversationProvider>,
       )
+    })
 
+    act(() => {
       if (!send) {
         throw new Error('Check the correct usage of "useSendMessage"!')
       }
 
-      let tsCounter = 0
-      Date.now = () => {
-        tsCounter += 1
+      mockDate.set(1)
+      send(testUserMessage)
+    })
 
-        return tsCounter
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
       }
 
-      send(testUserMessage) // ts === 4
-      send(testUserMessage) // ts === 5
-      send(testUserMessage) // ts === 6
-      send(testUserMessage) // ts === 7
+      mockDate.set(2)
+      send(testUserMessage)
+    })
+
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
+      }
+
+      mockDate.set(3)
+      send(testUserMessage)
+    })
+
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
+      }
+
+      mockDate.set(4)
+      send(testUserMessage)
     })
 
     expect(Object.keys(messages || {})).toHaveLength(4)
     expect(messages).toEqual({
+      1: testUserMessage,
+      2: testUserMessage,
+      3: testUserMessage,
       4: testUserMessage,
-      5: testUserMessage,
-      6: testUserMessage,
-      7: testUserMessage,
     })
 
     act(() => {
@@ -69,17 +88,15 @@ describe('useClearMessages', () => {
         throw new Error('Check the correct usage of "useClearMessages"!')
       }
 
-      clear({ timestamp: 6 })
+      clear({ timestamp: 3 })
     })
 
     expect(Object.keys(messages || {})).toHaveLength(3)
     expect(messages).toEqual({
+      1: testUserMessage,
+      2: testUserMessage,
       4: testUserMessage,
-      5: testUserMessage,
-      7: testUserMessage,
     })
-
-    Date.now = originalDateNow
   })
 
   it('clears range of messages', () => {
@@ -100,38 +117,56 @@ describe('useClearMessages', () => {
       text: 'test',
     }
 
-    const originalDateNow = Date.now
-
     act(() => {
       render(
         <ConversationProvider>
           <Component />
         </ConversationProvider>,
       )
+    })
 
+    act(() => {
       if (!send) {
         throw new Error('Check the correct usage of "useSendMessage"!')
       }
 
-      let tsCounter = 0
-      Date.now = () => {
-        tsCounter += 1
+      mockDate.set(1)
+      send(testUserMessage)
+    })
 
-        return tsCounter
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
       }
 
-      send(testUserMessage) // ts === 4
-      send(testUserMessage) // ts === 5
-      send(testUserMessage) // ts === 6
-      send(testUserMessage) // ts === 7
+      mockDate.set(2)
+      send(testUserMessage)
+    })
+
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
+      }
+
+      mockDate.set(3)
+      send(testUserMessage)
+    })
+
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
+      }
+
+      mockDate.set(4)
+      send(testUserMessage)
     })
 
     expect(Object.keys(messages || {})).toHaveLength(4)
     expect(messages).toEqual({
+      1: testUserMessage,
+      2: testUserMessage,
+      3: testUserMessage,
       4: testUserMessage,
-      5: testUserMessage,
-      6: testUserMessage,
-      7: testUserMessage,
     })
 
     act(() => {
@@ -139,15 +174,13 @@ describe('useClearMessages', () => {
         throw new Error('Check the correct usage of "useClearMessages"!')
       }
 
-      clear({ range: { start: 5, end: 6 } })
+      clear({ range: { start: 2, end: 3 } })
     })
 
     expect(Object.keys(messages || {})).toHaveLength(2)
     expect(messages).toEqual({
+      1: testUserMessage,
       4: testUserMessage,
-      7: testUserMessage,
     })
-
-    Date.now = originalDateNow
   })
 })

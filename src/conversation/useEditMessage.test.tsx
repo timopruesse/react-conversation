@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, act } from '@testing-library/react'
+import mockDate from 'mockdate'
 import useSendMessage from './useSendMessage'
 import {
   Message,
@@ -14,8 +15,8 @@ import useMessages from './useMessages'
 describe('useEditMessage', () => {
   it('updates message', () => {
     const timestamp = 1337
-    const originalDateNow = Date.now
-    Date.now = () => timestamp
+
+    mockDate.set(timestamp)
 
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
     let send: ((message: Message<unknown>) => void) | undefined
@@ -75,7 +76,5 @@ describe('useEditMessage', () => {
         meta: { test: 'updated' },
       },
     })
-
-    Date.now = originalDateNow
   })
 })

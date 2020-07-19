@@ -104,6 +104,31 @@ type ConversationAction<T> =
   | MessageEditAction<T>
   | MessageClearAction
 
+function getNextFreeTimestamp(
+  botMessages: MessageCollection<unknown, MessageBot<unknown>>,
+  userMessages: MessageCollection<unknown, MessageUser<unknown>>,
+): number {
+  const now = new Date()
+
+  let currentTimestamp = now.valueOf()
+
+  let message: Message<unknown> | undefined =
+    userMessages[currentTimestamp] || botMessages[currentTimestamp]
+
+  if (!message) {
+    return currentTimestamp
+  }
+
+  while (message) {
+    now.setMilliseconds(now.getMilliseconds() + 1)
+    currentTimestamp = now.valueOf()
+
+    message = userMessages[currentTimestamp] || botMessages[currentTimestamp]
+  }
+
+  return currentTimestamp
+}
+
 function ConversationProvider<T>({
   children,
 }: React.PropsWithChildren<unknown>) {
@@ -112,13 +137,14 @@ function ConversationProvider<T>({
       switch (action.type) {
         case 'messageSend':
           const { message } = action.payload
+          const ts = getNextFreeTimestamp(state.botMessages, state.userMessages)
 
           if (message.type === 'bot') {
             return {
               userMessages: state.userMessages,
               botMessages: {
                 ...state.botMessages,
-                [Date.now()]: message,
+                [ts]: message,
               },
             }
           }
@@ -127,7 +153,7 @@ function ConversationProvider<T>({
             botMessages: state.botMessages,
             userMessages: {
               ...state.userMessages,
-              [Date.now()]: message,
+              [ts]: message,
             },
           }
         case 'messageEdit':
