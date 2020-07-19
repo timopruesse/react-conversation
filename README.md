@@ -4,6 +4,10 @@
 > There are no UI components in here.  
 > Check out the example app for some 'inspiration' 😁
 
+## Prerequisite
+
+Add `@chroma91:registry=https://npm.pkg.github.com/` to your `.npmrc`.
+
 ## Installation
 
 ### Yarn
