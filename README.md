@@ -141,6 +141,9 @@ const clearMessages = useClearMessages()
 
 // delete messages starting at the timestamp '10' and ending with timestamp '50' (inclusively)
 clearMessages({ range: { start: 10, end: 50 } })
+
+// delete messages starting at the timestamp '100' and ending with the latest
+clearMessages({ range: { start: 100 } })
 ```
 
 ### Example
