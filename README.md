@@ -241,11 +241,11 @@ addReaction('meta.name', 'zipCode', reactToZipCode)
 
 ##### Remove reactions programatically
 
-````ts
+```ts
 const removeReaction = useRemoveMessageReaction()
 
 removeReaction('meta.name', 'zipCode')
-``
+```
 
 ---
 
@@ -258,7 +258,7 @@ const deleteMessage = useDeleteMessage()
 
 // delete the message with the timestamp '1337'
 deleteMessage(1337)
-````
+```
 
 ##### Delete a range of messages
 
