@@ -1,7 +1,7 @@
 import React from 'react'
 import BotIcon from './bot.svg'
 import { MessageBot } from '../../dist'
-import { MessageMetadata } from './Example'
+import { MessageMetadata } from '.'
 
 interface Props {
   timestamp: number

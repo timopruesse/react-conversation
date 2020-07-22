@@ -1,6 +1,6 @@
 import React from 'react'
 import { MessageType, useSendMessage } from 'react-conversation'
-import { MessageMetadata } from './Example'
+import { MessageMetadata } from '.'
 
 const SendForm = () => {
   const sendMessage = useSendMessage<MessageMetadata>()

@@ -11,7 +11,7 @@ import {
 import useMessages from './useMessages'
 import useDeleteMessage from './useDeleteMessage'
 
-describe('useClearMessages', () => {
+describe('useDeleteMessage', () => {
   it('clears a single message', () => {
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
     let send: ((message: Message<unknown>) => void) | undefined
