@@ -1,7 +1,7 @@
 import React from 'react'
 import UserIcon from './user.svg'
 import { MessageUser } from '../../dist'
-import { MessageMetadata } from './Example'
+import { MessageMetadata } from '.'
 
 interface Props {
   timestamp: number

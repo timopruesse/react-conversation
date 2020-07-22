@@ -4,7 +4,7 @@ import {
   useMessages,
   useClearMessages,
 } from 'react-conversation'
-import { MessageMetadata } from './Example'
+import { MessageMetadata } from '.'
 
 const EditForm = () => {
   const messages = useMessages<MessageMetadata>()
@@ -51,7 +51,7 @@ const EditForm = () => {
       return
     }
 
-    clearMessages({ timestamp: +selectedTimestamp })
+    clearMessages(+selectedTimestamp)
   }, [clearMessages, selectedTimestamp])
 
   return (

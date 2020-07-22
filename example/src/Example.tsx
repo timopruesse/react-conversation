@@ -10,10 +10,7 @@ import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
 import SendForm from './SendForm'
 import EditForm from './EditForm'
-
-export interface MessageMetadata {
-  mood: 'happy' | 'angry' | 'tired'
-}
+import { MessageMetadata } from '.'
 
 const Example = () => {
   const messages = useMessages<MessageMetadata>()

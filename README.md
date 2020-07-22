@@ -8,6 +8,8 @@
 
 Add `@chroma91:registry=https://npm.pkg.github.com/` to your `.npmrc`.
 
+---
+
 ## Installation
 
 ### Yarn
@@ -21,6 +23,8 @@ yarn add @chroma91/react-conversation
 ```bash
 npm install @chroma91/react-conversation
 ```
+
+---
 
 ### Usage
 
@@ -37,7 +41,9 @@ ReactDOM.render(
 )
 ```
 
-#### General Message Structure
+---
+
+#### General message structure
 
 ```ts
 // a message looks like this
@@ -51,10 +57,29 @@ const message = {
 }
 ```
 
+#### Message timestamps
+
+The timestamps of the messages are unique and also serve as their identifier.  
+If you send multiple messages at the same time, the timestamp of subsequent messages will be increased by one millisecond.
+
+##### Example
+
+If three messages get sent at `1595441078505` their timestamps will be the following:
+
+| Message No. |         Timestamp |
+| :---------: | ----------------: |
+|      1      | 159544107850**5** |
+|      2      | 159544107850**6** |
+|      3      | 159544107850**7** |
+
+---
+
 #### Metadata
 
 The messages can carry any form of metadata.  
 In the examples `MessageMetadata` will be used as a placeholder.
+
+---
 
 #### Get a collection of all the messages
 
@@ -88,6 +113,8 @@ const botMessages = useBotMessages<MessageMetadata>()
 const userMessages = useUserMessages<MessageMetadata>()
 ```
 
+---
+
 #### Send a message
 
 ```ts
@@ -112,6 +139,8 @@ sendMessage({
 })
 ```
 
+---
+
 #### Listen for messages
 
 ```ts
@@ -125,6 +154,8 @@ useOnUserMessage((message: MessageUser<MessageMetadata>) => {
   // do something with the message
 })
 ```
+
+---
 
 #### Edit a message
 
@@ -148,6 +179,76 @@ editMessage(
 )
 ```
 
+---
+
+#### Set message reactions
+
+The following is an example for a message reaction:
+
+```tsx
+interface FieldMetaData {
+  name: string
+}
+
+const reactToZipCode = async ({ text, meta }: Message<FieldMetaData>) => {
+  const cityName = await fetchCity(text)
+
+  if (!cityName) {
+    return undefined
+  }
+
+  return {
+    text: `Do you live in ${cityName}?`,
+    meta: {
+      suggestedCity: cityName,
+    },
+  }
+}
+
+const messageReactions: MessageReactionCollection<FieldMetaData> = {
+  // observe the property `meta.name`
+  'meta.name': {
+    // react when the value of that property is zipCode
+    zipCode: reactToZipCode,
+  },
+  // You can also observe the message text directly
+  text: {
+    'hello bot': () => {
+      return {
+        text: 'hello human',
+      }
+    },
+  },
+}
+
+ReactDOM.render(
+  <ConversationProvider>
+    <MessageReactionProvider reactions={messageReactions}>
+      <MyApp />
+    </MessageReactionProvider>
+  </ConversationProvider>,
+  document.getElementById('root'),
+)
+```
+
+##### Add reactions programatically
+
+```ts
+const addReaction = useAddMessageReaction()
+
+addReaction('meta.name', 'zipCode', reactToZipCode)
+```
+
+##### Remove reactions programatically
+
+````ts
+const removeReaction = useRemoveMessageReaction()
+
+removeReaction('meta.name', 'zipCode')
+``
+
+---
+
 #### Delete messages
 
 ##### Delete a single message
@@ -157,7 +258,7 @@ const deleteMessage = useDeleteMessage()
 
 // delete the message with the timestamp '1337'
 deleteMessage(1337)
-```
+````
 
 ##### Delete a range of messages
 
@@ -171,7 +272,9 @@ clearMessages(10, 50)
 clearMessages(100)
 ```
 
-### Example
+---
+
+### Example app
 
 There is a small example app where you can see the hooks in action.  
 Feel free to check out the source code to see how it works.
