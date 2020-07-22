@@ -9,18 +9,18 @@ import {
   MessageCollection,
 } from './context'
 import useMessages from './useMessages'
-import useClearMessages from './useClearMessages'
+import useDeleteMessage from './useDeleteMessage'
 
 describe('useClearMessages', () => {
-  it('clears range of messages', () => {
+  it('clears a single message', () => {
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
     let send: ((message: Message<unknown>) => void) | undefined
-    let clear: ((start: number, end?: number) => void) | undefined
+    let deleteMsg: ((timestamp: number) => void) | undefined
 
     const Component = () => {
       messages = useMessages()
       send = useSendMessage()
-      clear = useClearMessages()
+      deleteMsg = useDeleteMessage()
 
       return null
     }
@@ -83,16 +83,17 @@ describe('useClearMessages', () => {
     })
 
     act(() => {
-      if (!clear) {
+      if (!deleteMsg) {
         throw new Error('Check the correct usage of "useClearMessages"!')
       }
 
-      clear(2, 3)
+      deleteMsg(3)
     })
 
-    expect(Object.keys(messages || {})).toHaveLength(2)
+    expect(Object.keys(messages || {})).toHaveLength(3)
     expect(messages).toEqual({
       1: testUserMessage,
+      2: testUserMessage,
       4: testUserMessage,
     })
   })

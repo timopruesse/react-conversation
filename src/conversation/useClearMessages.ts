@@ -1,12 +1,15 @@
 import React from 'react'
-import { ConversationContext, MessageClearPayload } from './context'
+import { ConversationContext } from './context'
 
 export default function useClearMessages() {
   const { dispatch } = React.useContext(ConversationContext)
 
-  return (payload: MessageClearPayload) =>
+  return (start: number, end?: number) =>
     dispatch({
       type: 'messageClear',
-      payload,
+      payload: {
+        start,
+        end,
+      },
     })
 }

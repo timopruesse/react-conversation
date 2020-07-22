@@ -1,4 +1,5 @@
 import React from 'react'
+import { filterConversation } from './utils/filter'
 
 export type MessageType = 'bot' | 'user'
 
@@ -62,46 +63,25 @@ interface MessageEditAction<T> {
   }
 }
 
-interface ClearMessageRange {
-  range: { start: number; end?: number }
-}
-
-export type MessageClearPayload = ClearMessageRange | { timestamp: number }
-
-function isTimestampRange(
-  payload: MessageClearPayload,
-): payload is ClearMessageRange {
-  return (payload as ClearMessageRange).range !== undefined
-}
-
-function getMessageClearFilterFn(payload: MessageClearPayload) {
-  if (isTimestampRange(payload)) {
-    const {
-      range: { start, end },
-    } = payload
-
-    return (ts: string) => {
-      const numericTs = +ts
-
-      if (end) {
-        return numericTs < start || numericTs > end
-      }
-
-      return numericTs < start
-    }
+interface MessageDeleteAction {
+  type: 'messageDelete'
+  payload: {
+    timestamp: number
   }
-
-  return (ts: string) => +ts !== payload.timestamp
 }
 
 interface MessageClearAction {
   type: 'messageClear'
-  payload: MessageClearPayload
+  payload: {
+    start: number
+    end?: number
+  }
 }
 
 type ConversationAction<T> =
   | MessageSendAction<T>
   | MessageEditAction<T>
+  | MessageDeleteAction
   | MessageClearAction
 
 function getNextFreeTimestamp(
@@ -196,27 +176,23 @@ function ConversationProvider<T>({
               },
             },
           }
+        case 'messageDelete':
+          return filterConversation(
+            state,
+            (tsToDelete: string) => +tsToDelete !== action.payload.timestamp,
+          )
         case 'messageClear':
-          const filterFunc = getMessageClearFilterFn(action.payload)
+          const { start, end } = action.payload
 
-          return {
-            botMessages: Object.keys(state.botMessages)
-              .filter(filterFunc)
-              .reduce((previous, current) => {
-                return {
-                  ...previous,
-                  [current]: state.botMessages[current],
-                }
-              }, {}),
-            userMessages: Object.keys(state.userMessages)
-              .filter(filterFunc)
-              .reduce((previous, current) => {
-                return {
-                  ...previous,
-                  [current]: state.userMessages[current],
-                }
-              }, {}),
-          }
+          return filterConversation(state, (tsToClear: string) => {
+            const numericTs = +tsToClear
+
+            if (end) {
+              return numericTs < start || numericTs > end
+            }
+
+            return numericTs < start
+          })
         default:
           /* istanbul ignore next */
           return state

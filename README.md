@@ -24,6 +24,19 @@ npm install @chroma91/react-conversation
 
 ### Usage
 
+#### Setup
+
+Add the `ConversationProvider`:
+
+```tsx
+ReactDOM.render(
+  <ConversationProvider>
+    <MyApp />
+  </ConversationProvider>,
+  document.getElementById('root'),
+)
+```
+
 #### General Message Structure
 
 ```ts
@@ -140,10 +153,10 @@ editMessage(
 ##### Delete a single message
 
 ```ts
-const clearMessages = useClearMessages()
+const deleteMessage = useDeleteMessage()
 
 // delete the message with the timestamp '1337'
-clearMessages({ timestamp: 1337 })
+deleteMessage(1337)
 ```
 
 ##### Delete a range of messages
@@ -152,10 +165,10 @@ clearMessages({ timestamp: 1337 })
 const clearMessages = useClearMessages()
 
 // delete messages starting at the timestamp '10' and ending with timestamp '50' (inclusively)
-clearMessages({ range: { start: 10, end: 50 } })
+clearMessages(10, 50)
 
-// delete messages starting at the timestamp '100' and ending with the latest
-clearMessages({ range: { start: 100 } })
+// delete messages starting at the timestamp '100' and ending with the latest message (inclusively)
+clearMessages(100)
 ```
 
 ### Example
