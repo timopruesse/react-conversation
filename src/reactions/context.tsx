@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line import/no-unresolved
 import { pick } from 'dot-object'
 import { MessageBot, MessageUser } from '../conversation/context'
 import useOnUserMessage from '../conversation/useOnUserMessage'
@@ -57,8 +58,8 @@ export const MessageReactionContext = React.createContext<
 
 function MessageReactionProvider<T>({
   children,
-  reactions: initialReactions,
-}: React.PropsWithChildren<{ reactions: MessageReactionCollection<T> }>) {
+  reactions: initialReactions = {},
+}: React.PropsWithChildren<{ reactions?: MessageReactionCollection<T> }>) {
   const [reactions, dispatch] = React.useReducer(
     (state: MessageReactionCollection<T>, action: MessageReactionAction<T>) => {
       switch (action.type) {
