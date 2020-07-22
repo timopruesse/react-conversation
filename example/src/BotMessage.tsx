@@ -1,6 +1,6 @@
 import React from 'react'
+import { MessageBot } from 'react-conversation'
 import BotIcon from './bot.svg'
-import { MessageBot } from '../../dist'
 import { MessageMetadata } from '.'
 
 interface Props {

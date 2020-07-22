@@ -3,7 +3,7 @@ import { ConversationContext, MessageBot } from './context'
 
 type OnBotMessage<T> = (message: MessageBot<T>) => void
 
-export default function useOnBotMessage<T>(onBotMessage: OnBotMessage<T>) {
+export function useOnBotMessage<T>(onBotMessage: OnBotMessage<T>) {
   const { conversation } = React.useContext(ConversationContext)
 
   React.useEffect(() => {

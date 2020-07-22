@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, act } from '@testing-library/react'
 import mockDate from 'mockdate'
-import useSendMessage from './useSendMessage'
+import { useSendMessage } from './useSendMessage'
 import {
   Message,
   MessageUser,
@@ -9,8 +9,8 @@ import {
   MessageUpdate,
   MessageCollection,
 } from './context'
-import useEditMessage from './useEditMessage'
-import useMessages from './useMessages'
+import { useEditMessage } from './useEditMessage'
+import { useMessages } from './useMessages'
 
 describe('useEditMessage', () => {
   it('updates message', () => {

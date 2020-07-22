@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, act } from '@testing-library/react'
-import useAddMessageReaction from './useAddMessageReaction'
+import { useAddMessageReaction } from './useAddMessageReaction'
 import { MessageReactionProvider, MessageReaction } from './context'
 import {
   ConversationProvider,
@@ -8,7 +8,7 @@ import {
   Message,
   MessageUser,
 } from '../conversation/context'
-import useSendMessage from '../conversation/useSendMessage'
+import { useSendMessage } from '../conversation/useSendMessage'
 
 const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
   <ConversationProvider>

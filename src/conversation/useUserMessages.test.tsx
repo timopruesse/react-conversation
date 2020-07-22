@@ -6,7 +6,7 @@ import {
   MessageCollection,
   MessageUser,
 } from './context'
-import useUserMessages from './useUserMessages'
+import { useUserMessages } from './useUserMessages'
 
 const unorderedConversation: Conversation<unknown> = {
   botMessages: {

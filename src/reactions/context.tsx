@@ -2,8 +2,8 @@ import React from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { pick } from 'dot-object'
 import { MessageBot, MessageUser } from '../conversation/context'
-import useOnUserMessage from '../conversation/useOnUserMessage'
-import useSendMessage from '../conversation/useSendMessage'
+import { useOnUserMessage } from '../conversation/useOnUserMessage'
+import { useSendMessage } from '../conversation/useSendMessage'
 
 export type MessageReaction<T> = (
   message: MessageUser<T>,

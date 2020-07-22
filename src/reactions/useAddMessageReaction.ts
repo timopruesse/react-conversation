@@ -1,7 +1,7 @@
 import React from 'react'
 import { MessageReactionContext, MessageReaction } from './context'
 
-export default function useAddMessageReaction<T>() {
+export function useAddMessageReaction<T>() {
   const { dispatch } = React.useContext(MessageReactionContext)
 
   return (key: string, reactionKey: React.Key, handler: MessageReaction<T>) =>

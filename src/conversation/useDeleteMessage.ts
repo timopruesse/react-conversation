@@ -1,7 +1,7 @@
 import React from 'react'
 import { ConversationContext } from './context'
 
-export default function useDeleteMessage() {
+export function useDeleteMessage() {
   const { dispatch } = React.useContext(ConversationContext)
 
   return (timestamp: number) =>

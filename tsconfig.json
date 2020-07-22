@@ -5,8 +5,6 @@
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "jsx": "react",
-    "sourceMap": true,
-    "declaration": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -23,7 +21,11 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "sourceMap": true,
+    "removeComments": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "src/**/*.test.ts"]

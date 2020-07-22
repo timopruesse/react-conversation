@@ -1,0 +1,10 @@
+{
+  "presets": ["@babel/env", "@babel/react", "@babel/typescript"],
+  "plugins": [
+    "@babel/transform-runtime",
+    "@babel/transform-computed-properties",
+    "@babel/proposal-object-rest-spread",
+    "@babel/proposal-export-default-from",
+    "@babel/transform-arrow-functions"
+  ]
+}

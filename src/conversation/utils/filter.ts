@@ -1,6 +1,5 @@
 import { Conversation } from '../context'
 
-// eslint-disable-next-line import/prefer-default-export
 export function filterConversation<T>(
   { botMessages, userMessages }: Conversation<T>,
   filterFn: (timestamp: string) => boolean,

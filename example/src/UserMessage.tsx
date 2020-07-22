@@ -1,6 +1,6 @@
 import React from 'react'
+import { MessageUser } from 'react-conversation'
 import UserIcon from './user.svg'
-import { MessageUser } from '../../dist'
 import { MessageMetadata } from '.'
 
 interface Props {

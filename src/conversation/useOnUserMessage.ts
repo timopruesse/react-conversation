@@ -3,7 +3,7 @@ import { ConversationContext, MessageUser } from './context'
 
 type OnUserMessage<T> = (message: MessageUser<T>) => void
 
-export default function useOnUserMessage<T>(onUserMessage: OnUserMessage<T>) {
+export function useOnUserMessage<T>(onUserMessage: OnUserMessage<T>) {
   const { conversation } = React.useContext(ConversationContext)
 
   React.useEffect(() => {

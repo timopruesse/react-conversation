@@ -1,15 +1,15 @@
 import React from 'react'
 import { render, act } from '@testing-library/react'
 import mockDate from 'mockdate'
-import useSendMessage from './useSendMessage'
+import { useSendMessage } from './useSendMessage'
 import {
   Message,
   MessageUser,
   ConversationProvider,
   MessageCollection,
 } from './context'
-import useMessages from './useMessages'
-import useDeleteMessage from './useDeleteMessage'
+import { useMessages } from './useMessages'
+import { useDeleteMessage } from './useDeleteMessage'
 
 describe('useDeleteMessage', () => {
   it('clears a single message', () => {

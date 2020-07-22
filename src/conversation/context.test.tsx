@@ -10,8 +10,8 @@ import {
   ConversationProvider,
   MessageBot,
 } from './context'
-import useMessages from './useMessages'
-import useSendMessage from './useSendMessage'
+import { useMessages } from './useMessages'
+import { useSendMessage } from './useSendMessage'
 
 describe('context', () => {
   it('throws error when not provider is defined', () => {

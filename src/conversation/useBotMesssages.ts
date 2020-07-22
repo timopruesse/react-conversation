@@ -1,10 +1,7 @@
 import React from 'react'
 import { MessageCollection, MessageBot, ConversationContext } from './context'
 
-export default function useBotMessages<T>(): MessageCollection<
-  T,
-  MessageBot<T>
-> {
+export function useBotMessages<T>(): MessageCollection<T, MessageBot<T>> {
   const {
     conversation: { botMessages },
   } = React.useContext(ConversationContext)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import useMessages from './useMessages'
+import { useMessages } from './useMessages'
 import {
   Conversation,
   ConversationContext,
