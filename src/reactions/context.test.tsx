@@ -68,7 +68,7 @@ describe('Message Reactions', () => {
     })
 
     // Reaction needs to be processed
-    waitFor(() => {}, { timeout: 1 })
+    waitFor(jest.fn(), { timeout: 1 })
 
     expect(messageHandler).toHaveBeenCalledWith(testUserMessage)
   })
