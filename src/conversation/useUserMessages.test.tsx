@@ -9,6 +9,7 @@ import {
 import { useUserMessages } from './useUserMessages'
 
 const unorderedConversation: Conversation<unknown> = {
+  botState: 'idle',
   botMessages: {
     2: {
       type: 'bot',

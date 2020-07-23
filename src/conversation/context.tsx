@@ -22,7 +22,15 @@ export interface MessageCollection<T, M extends MessageBase<T>> {
   [timestamp: number]: M
 }
 
+export type ConversationBotState = 'idle' | 'reacting'
+
+interface ConversationBotStateSetAction {
+  type: 'setBotState'
+  payload: ConversationBotState
+}
+
 export interface Conversation<T = unknown> {
+  botState: ConversationBotState
   botMessages: MessageCollection<T, MessageBot<T>>
   userMessages: MessageCollection<T, MessageUser<T>>
 }
@@ -40,6 +48,7 @@ export const ConversationContext = React.createContext<
   ConversationContextType<unknown>
 >({
   conversation: {
+    botState: 'idle',
     botMessages: {},
     userMessages: {},
   },
@@ -83,6 +92,7 @@ type ConversationAction<T> =
   | MessageEditAction<T>
   | MessageDeleteAction
   | MessageClearAction
+  | ConversationBotStateSetAction
 
 function getNextFreeTimestamp(
   botMessages: MessageCollection<unknown, MessageBot<unknown>>,
@@ -121,7 +131,7 @@ function ConversationProvider<T>({
 
           if (message.type === 'bot') {
             return {
-              userMessages: state.userMessages,
+              ...state,
               botMessages: {
                 ...state.botMessages,
                 [ts]: message,
@@ -130,7 +140,7 @@ function ConversationProvider<T>({
           }
 
           return {
-            botMessages: state.botMessages,
+            ...state,
             userMessages: {
               ...state.userMessages,
               [ts]: message,
@@ -147,7 +157,7 @@ function ConversationProvider<T>({
 
           if (currentMessage.type === 'bot') {
             return {
-              userMessages: state.userMessages,
+              ...state,
               botMessages: {
                 ...state.botMessages,
                 [`${timestamp}`]: {
@@ -163,7 +173,7 @@ function ConversationProvider<T>({
           }
 
           return {
-            botMessages: state.botMessages,
+            ...state,
             userMessages: {
               ...state.userMessages,
               [`${timestamp}`]: {
@@ -193,12 +203,17 @@ function ConversationProvider<T>({
 
             return numericTs < start
           })
+        case 'setBotState':
+          return {
+            ...state,
+            botState: action.payload,
+          }
         default:
           /* istanbul ignore next */
           return state
       }
     },
-    { botMessages: {}, userMessages: {} },
+    { botState: 'idle', botMessages: {}, userMessages: {} },
   )
 
   const value = {

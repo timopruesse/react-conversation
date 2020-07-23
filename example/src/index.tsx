@@ -11,9 +11,15 @@ export interface MessageMetadata {
   mood: 'happy' | 'angry' | 'tired'
 }
 
+const someCoolApiCall = (msDuration: number) => {
+  return new Promise((resolve) => setTimeout(resolve, msDuration))
+}
+
 const exampleReactions: MessageReactionCollection<MessageMetadata> = {
   'meta.mood': {
-    angry: () => {
+    angry: async () => {
+      await someCoolApiCall(2000)
+
       return {
         type: 'bot',
         text: "Don't yell at me human!",

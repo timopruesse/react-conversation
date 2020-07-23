@@ -11,6 +11,7 @@ import BotMessage from './BotMessage'
 import SendForm from './SendForm'
 import EditForm from './EditForm'
 import { MessageMetadata } from '.'
+import BotStateIndicator from './BotStateIndicator'
 
 const Example = () => {
   const messages = useMessages<MessageMetadata>()
@@ -55,6 +56,7 @@ const Example = () => {
             />
           )
         })}
+        <BotStateIndicator />
       </div>
       <div style={{ padding: '16px 0' }}>
         <SendForm />

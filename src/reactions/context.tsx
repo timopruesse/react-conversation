@@ -4,10 +4,11 @@ import { pick } from 'dot-object'
 import { MessageBot, MessageUser } from '../conversation/context'
 import { useOnUserMessage } from '../conversation/useOnUserMessage'
 import { useSendMessage } from '../conversation/useSendMessage'
+import { useSetBotState } from '../conversation/useSetBotState'
 
 export type MessageReaction<T> = (
   message: MessageUser<T>,
-) => MessageBot<T> | undefined
+) => Promise<MessageBot<T> | undefined>
 
 type MessageReactions<T> = Record<React.Key, MessageReaction<T>>
 
@@ -105,8 +106,9 @@ function MessageReactionProvider<T>({
   }
 
   const sendMessage = useSendMessage<T>()
+  const setBotState = useSetBotState()
   const onUserMessage = React.useCallback(
-    (message: MessageUser<T>) => {
+    async (message: MessageUser<T>) => {
       // eslint-disable-next-line no-restricted-syntax
       for (const reactionKey of Object.keys(reactions)) {
         const messageValue = pick(reactionKey, message)
@@ -116,18 +118,26 @@ function MessageReactionProvider<T>({
         )
 
         if (reaction) {
-          const botMessage = reactions[reactionKey][messageValue](message)
-          if (!botMessage) {
+          setBotState('reacting')
+
+          try {
+            const botMessage = await reactions[reactionKey][messageValue](
+              message,
+            )
+            if (!botMessage) {
+              return
+            }
+
+            sendMessage(botMessage)
+
             return
+          } finally {
+            setBotState('idle')
           }
-
-          sendMessage(botMessage)
-
-          return
         }
       }
     },
-    [reactions, sendMessage],
+    [reactions, sendMessage, setBotState],
   )
 
   useOnUserMessage<T>(onUserMessage)

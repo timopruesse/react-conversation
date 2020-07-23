@@ -2,7 +2,7 @@
   "private": true,
   "main": "./dist/example.js",
   "scripts": {
-    "start": "cp ./src/index.html ./dist/index.html && concurrently \"yarn webpack --watch\" \"npx serve dist\""
+    "start": "mkdir ./dist & cp ./src/index.html ./dist/index.html && concurrently \"yarn webpack --watch\" \"npx serve dist\""
   },
   "dependencies": {
     "react-conversation": "link:.."

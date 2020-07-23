@@ -13,3 +13,7 @@ export { useUserMessages } from './conversation/useUserMessages'
 export * from './reactions/context'
 export { useAddMessageReaction } from './reactions/useAddMessageReaction'
 export { useRemoveMessageReaction } from './reactions/useRemoveMessageReaction'
+
+/** Bot Conversation State */
+export { useBotState } from './conversation/useBotState'
+export { useOnBotStateChange } from './conversation/useOnBotStateChange'

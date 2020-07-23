@@ -1,10 +1,9 @@
 import React from 'react'
-import { render, act } from '@testing-library/react'
+import { render, act, waitFor } from '@testing-library/react'
 import { useAddMessageReaction } from './useAddMessageReaction'
 import { MessageReactionProvider, MessageReaction } from './context'
 import {
   ConversationProvider,
-  MessageBot,
   Message,
   MessageUser,
 } from '../conversation/context'
@@ -18,14 +17,6 @@ const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
 
 describe('Message Reactions', () => {
   it('reacts to messages correctly', () => {
-    const botTestMessage: MessageBot<{ triggered: boolean }> = {
-      type: 'bot',
-      text: 'reacted',
-      meta: {
-        triggered: true,
-      },
-    }
-
     let send: ((message: Message<{ test: string }>) => void) | undefined
     let addReaction:
       | ((
@@ -34,23 +25,6 @@ describe('Message Reactions', () => {
           handler: MessageReaction<unknown>,
         ) => void)
       | undefined
-
-    const messageHandler = jest.fn(() => {
-      return botTestMessage
-    })
-
-    const Component = () => {
-      send = useSendMessage()
-      addReaction = useAddMessageReaction()
-
-      return null
-    }
-
-    render(
-      <TestProvider>
-        <Component />
-      </TestProvider>,
-    )
 
     const testUserMessage: MessageUser<{ test: string }> = {
       type: 'user',
@@ -61,16 +35,41 @@ describe('Message Reactions', () => {
     }
 
     act(() => {
-      if (!send || !addReaction) {
-        throw new Error('Hooks are not working correctly!')
+      const Component = () => {
+        send = useSendMessage()
+        addReaction = useAddMessageReaction()
+
+        return null
+      }
+
+      render(
+        <TestProvider>
+          <Component />
+        </TestProvider>,
+      )
+    })
+
+    const messageHandler = jest.fn()
+
+    act(() => {
+      if (!addReaction) {
+        throw new Error('Check the correct usage of "useAddMessageReaction"!')
       }
 
       addReaction('meta.test', 'trigger', messageHandler)
+    })
+
+    act(() => {
+      if (!send) {
+        throw new Error('Check the correct usage of "useSendMessage"!')
+      }
 
       send(testUserMessage)
     })
 
+    // Reaction needs to be processed
+    waitFor(() => {}, { timeout: 1 })
+
     expect(messageHandler).toHaveBeenCalledWith(testUserMessage)
-    expect(messageHandler).toHaveReturnedWith(botTestMessage)
   })
 })

@@ -10,6 +10,7 @@ import {
 } from './context'
 
 const emptyConversation: Conversation<unknown> = {
+  botState: 'idle',
   botMessages: {},
   userMessages: {},
 }

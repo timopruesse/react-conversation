@@ -181,7 +181,7 @@ editMessage(
 
 ---
 
-#### Set message reactions
+#### React to user messages
 
 The following is an example for a message reaction:
 
@@ -249,6 +249,33 @@ removeReaction('meta.name', 'zipCode')
 
 ---
 
+#### Handle bot states
+
+At the moment it is possible for the bot to be in one of two states: `idle` or `reacting`.
+
+|   State    |                                                                                                                                        Description |
+| :--------: | -------------------------------------------------------------------------------------------------------------------------------------------------: |
+|   `idle`   |                                                                      This is the default state of the bot. Nothing is being done in the background |
+| `reacting` | This state gets triggered as soon as the bot is reacting to a user message. The bot will return to the `idle` state when the reaction is finished. |
+
+In general you should **never** send other bot messages when the bot is in any other state than `idle`. Otherwise, the order of the bot messages might be confusing.
+
+##### Get the current state
+
+```ts
+const botState = useBotState()
+```
+
+##### React to state changes
+
+```ts
+useOnBotStateChange((state: ConversationBotState) => {
+  // Do something when the state changed..
+})
+```
+
+---
+
 #### Delete messages
 
 ##### Delete a single message
@@ -283,3 +310,5 @@ Feel free to check out the source code to see how it works.
 2. `cd example`
 3. Execute `yarn start`
 4. Open `localhost:5000` in any browser
+
+> Try to send a user message with an angry tone ;)

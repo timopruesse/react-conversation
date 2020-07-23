@@ -29,6 +29,8 @@ export default {
     reactions: 'src/reactions/context.tsx',
     reactions_add: 'src/reactions/useAddMessageReaction.ts',
     reactions_remove: 'src/reactions/useRemoveMessageReaction.ts',
+    bot_state: 'src/conversation/useBotState.ts',
+    bot_state_change: 'src/conversation/useOnBotStateChange.ts',
   },
   output: [
     {
