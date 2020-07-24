@@ -1,14 +1,11 @@
 {
-  "name": "@chroma91/react-conversation",
+  "name": "react-conversation",
   "description": "Hooks to help you build conversations between your app and the user.",
   "author": {
     "name": "Timo Prüße",
     "email": "chroma91@gmail.com"
   },
-  "version": "1.0.0-rc3",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
+  "version": "1.0.0",
   "sideEffects": "false",
   "license": "MIT",
   "types": "dist/types/index.d.ts",
