@@ -145,14 +145,18 @@ sendMessage({
 
 ```ts
 // listen for bot messages
-useOnBotMessage((message: MessageBot<MessageMetadata>) => {
-  // do something with the message
-})
+useOnBotMessage(
+  (message: MessageBot<MessageMetadata>, botState: ConversationBotState) => {
+    // do something with the message
+  },
+)
 
 // listen for user messages
-useOnUserMessage((message: MessageUser<MessageMetadata>) => {
-  // do something with the message
-})
+useOnUserMessage(
+  (message: MessageUser<MessageMetadata>, botState: ConversationBotState) => {
+    // do something with the message
+  },
+)
 ```
 
 ---
@@ -182,6 +186,8 @@ editMessage(
 ---
 
 #### React to user messages
+
+> The bot will only trigger one reaction at once.
 
 The following is an example for a message reaction:
 
