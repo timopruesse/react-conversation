@@ -1,7 +1,14 @@
 import React from 'react'
-import { ConversationContext, MessageUser } from './context'
+import {
+  ConversationContext,
+  MessageUser,
+  ConversationBotState,
+} from './context'
 
-type OnUserMessage<T> = (message: MessageUser<T>) => void
+type OnUserMessage<T> = (
+  message: MessageUser<T>,
+  botState: ConversationBotState,
+) => void
 
 export function useOnUserMessage<T>(onUserMessage: OnUserMessage<T>) {
   const { conversation } = React.useContext(ConversationContext)
@@ -17,6 +24,7 @@ export function useOnUserMessage<T>(onUserMessage: OnUserMessage<T>) {
       Object.values(conversation.userMessages)[
         userMessageCount - 1
       ] as MessageUser<T>,
+      conversation.botState,
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversation.userMessages])

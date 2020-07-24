@@ -1,7 +1,11 @@
 import React from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { pick } from 'dot-object'
-import { MessageBot, MessageUser } from '../conversation/context'
+import {
+  MessageBot,
+  MessageUser,
+  ConversationBotState,
+} from '../conversation/context'
 import { useOnUserMessage } from '../conversation/useOnUserMessage'
 import { useSendMessage } from '../conversation/useSendMessage'
 import { useSetBotState } from '../conversation/useSetBotState'
@@ -108,7 +112,11 @@ function MessageReactionProvider<T>({
   const sendMessage = useSendMessage<T>()
   const setBotState = useSetBotState()
   const onUserMessage = React.useCallback(
-    async (message: MessageUser<T>) => {
+    async (message: MessageUser<T>, botState: ConversationBotState) => {
+      if (botState === 'reacting') {
+        return
+      }
+
       // eslint-disable-next-line no-restricted-syntax
       for (const reactionKey of Object.keys(reactions)) {
         const messageValue = pick(reactionKey, message)

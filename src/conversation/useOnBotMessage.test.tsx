@@ -44,7 +44,7 @@ describe('useOnBotMessage', () => {
       send(testBotMessage)
     })
 
-    expect(onBotMessage).toHaveBeenCalledWith(testBotMessage)
+    expect(onBotMessage).toHaveBeenCalledWith(testBotMessage, 'idle')
   })
 
   it('does not listen to user messages', () => {
