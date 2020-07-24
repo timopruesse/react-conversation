@@ -73,7 +73,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
-    "rollup": "^2.22.1",
+    "rollup": "^2.23.0",
     "rollup-plugin-filesize": "^9.0.0",
     "rollup-plugin-terser": "^6.1.0",
     "ts-jest": "^26.1.3",
