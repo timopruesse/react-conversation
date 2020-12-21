@@ -5,7 +5,7 @@
     "name": "Timo Prüße",
     "email": "chroma91@gmail.com"
   },
-  "version": "1.0.0",
+  "version": "1.1.0",
   "sideEffects": "false",
   "license": "MIT",
   "types": "dist/types/index.d.ts",
