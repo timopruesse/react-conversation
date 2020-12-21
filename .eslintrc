@@ -50,6 +50,7 @@
     "import/prefer-default-export": "off",
     "no-await-in-loop": "off",
     "no-restricted-syntax": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-continue": "off"
   }
 }

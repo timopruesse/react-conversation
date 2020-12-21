@@ -31,6 +31,7 @@ export default {
     reactions_remove: 'src/reactions/useRemoveMessageReaction.ts',
     bot_state: 'src/conversation/useBotState.ts',
     bot_state_change: 'src/conversation/useOnBotStateChange.ts',
+    utils_cb_func: 'src/utils/useCallbackFunction.ts',
   },
   output: [
     {

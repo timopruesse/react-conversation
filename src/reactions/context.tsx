@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { pick } from 'dot-object'
-import { createContext, memo, useCallback, useReducer } from 'react'
+import { createContext, memo, useReducer } from 'react'
 import { ConversationBotState } from '../conversation/context'
 import { useOnUserMessage } from '../conversation/useOnUserMessage'
 import { useSendMessage } from '../conversation/useSendMessage'
@@ -52,7 +52,8 @@ interface MessageReactionContextType<T> {
 }
 
 export const MessageReactionContext = createContext<
-  MessageReactionContextType<unknown>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  MessageReactionContextType<any>
 >({
   reactions: {},
   dispatch: throwProviderError,
@@ -102,14 +103,10 @@ function MessageReactionProvider<T>({
     initialReactions,
   )
 
-  const value = {
-    reactions,
-    dispatch,
-  }
-
   const sendMessage = useSendMessage<T>()
   const setBotState = useSetBotState()
-  const onUserMessage = useCallback(
+
+  useOnUserMessage<T>(
     async (message: MessageUser<T>, botState: ConversationBotState) => {
       if (botState === 'reacting') {
         return
@@ -122,34 +119,34 @@ function MessageReactionProvider<T>({
           (o) => o === messageValue,
         )
 
-        if (reaction) {
-          setBotState('reacting')
+        if (!reaction) {
+          continue
+        }
 
-          try {
-            const botMessage = await reactions[reactionKey][messageValue](
-              message,
-            )
-            if (!botMessage) {
-              return
-            }
+        setBotState('reacting')
 
-            sendMessage(botMessage)
-
+        try {
+          const botMessage = await reactions[reactionKey][messageValue](message)
+          if (!botMessage) {
             return
-          } finally {
-            setBotState('idle')
           }
+
+          sendMessage(botMessage)
+
+          return
+        } finally {
+          setBotState('idle')
         }
       }
     },
-    [reactions, sendMessage, setBotState],
   )
-
-  useOnUserMessage<T>(onUserMessage)
 
   return (
     <MessageReactionContext.Provider
-      value={value as MessageReactionContextType<unknown>}
+      value={{
+        reactions,
+        dispatch,
+      }}
     >
       {children}
     </MessageReactionContext.Provider>
