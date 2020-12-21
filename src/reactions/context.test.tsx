@@ -1,15 +1,13 @@
-import React from 'react'
 import { render, act, waitFor } from '@testing-library/react'
 import { useAddMessageReaction } from './useAddMessageReaction'
 import { MessageReactionProvider, MessageReaction } from './context'
 import {
   ConversationProvider,
-  Message,
-  MessageUser,
   ConversationBotState,
 } from '../conversation/context'
 import { useSendMessage } from '../conversation/useSendMessage'
 import { useSetBotState } from '../conversation/useSetBotState'
+import { Message, MessageUser } from '../conversation/utils/message'
 
 const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
   <ConversationProvider>

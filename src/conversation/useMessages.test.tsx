@@ -1,12 +1,7 @@
-import React from 'react'
 import { render } from '@testing-library/react'
 import { useMessages } from './useMessages'
-import {
-  Conversation,
-  ConversationContext,
-  MessageCollection,
-  Message,
-} from './context'
+import { Conversation, ConversationContext } from './context'
+import { Message, MessageCollection } from './utils/message'
 
 const unorderedConversation: Conversation<unknown> = {
   botState: 'idle',

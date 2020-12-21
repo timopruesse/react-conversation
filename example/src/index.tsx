@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   ConversationProvider,
@@ -11,9 +10,8 @@ export interface MessageMetadata {
   mood: 'happy' | 'angry' | 'tired'
 }
 
-const someCoolApiCall = (msDuration: number) => {
-  return new Promise((resolve) => setTimeout(resolve, msDuration))
-}
+const someCoolApiCall = (msDuration: number) =>
+  new Promise((resolve) => setTimeout(resolve, msDuration))
 
 const exampleReactions: MessageReactionCollection<MessageMetadata> = {
   'meta.mood': {

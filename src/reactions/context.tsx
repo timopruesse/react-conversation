@@ -1,14 +1,11 @@
-import React from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { pick } from 'dot-object'
-import {
-  MessageBot,
-  MessageUser,
-  ConversationBotState,
-} from '../conversation/context'
+import { createContext, memo, useCallback, useReducer } from 'react'
+import { ConversationBotState } from '../conversation/context'
 import { useOnUserMessage } from '../conversation/useOnUserMessage'
 import { useSendMessage } from '../conversation/useSendMessage'
 import { useSetBotState } from '../conversation/useSetBotState'
+import { MessageBot, MessageUser } from '../conversation/utils/message'
 
 export type MessageReaction<T> = (
   message: MessageUser<T>,
@@ -54,7 +51,7 @@ interface MessageReactionContextType<T> {
   dispatch: React.Dispatch<MessageReactionAction<T>>
 }
 
-export const MessageReactionContext = React.createContext<
+export const MessageReactionContext = createContext<
   MessageReactionContextType<unknown>
 >({
   reactions: {},
@@ -65,7 +62,7 @@ function MessageReactionProvider<T>({
   children,
   reactions: initialReactions = {},
 }: React.PropsWithChildren<{ reactions?: MessageReactionCollection<T> }>) {
-  const [reactions, dispatch] = React.useReducer(
+  const [reactions, dispatch] = useReducer(
     (state: MessageReactionCollection<T>, action: MessageReactionAction<T>) => {
       switch (action.type) {
         case 'messageReactionAdd':
@@ -88,12 +85,13 @@ function MessageReactionProvider<T>({
             [removeKey]: {
               ...Object.keys(subState)
                 .filter((currentKey) => currentKey !== removeReaction.key)
-                .reduce((previous, current) => {
-                  return {
+                .reduce(
+                  (previous, current) => ({
                     ...previous,
                     [current]: subState[current],
-                  }
-                }, {}),
+                  }),
+                  {},
+                ),
             },
           }
 
@@ -111,13 +109,12 @@ function MessageReactionProvider<T>({
 
   const sendMessage = useSendMessage<T>()
   const setBotState = useSetBotState()
-  const onUserMessage = React.useCallback(
+  const onUserMessage = useCallback(
     async (message: MessageUser<T>, botState: ConversationBotState) => {
       if (botState === 'reacting') {
         return
       }
 
-      // eslint-disable-next-line no-restricted-syntax
       for (const reactionKey of Object.keys(reactions)) {
         const messageValue = pick(reactionKey, message)
 
@@ -159,7 +156,7 @@ function MessageReactionProvider<T>({
   )
 }
 
-const MemoizedMessageReactionProvider = React.memo(
+const MemoizedMessageReactionProvider = memo(
   MessageReactionProvider,
 ) as typeof MessageReactionProvider
 

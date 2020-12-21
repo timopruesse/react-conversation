@@ -1,26 +1,12 @@
-import React from 'react'
+import { createContext, memo, useReducer } from 'react'
 import { filterConversation } from './utils/filter'
-
-export type MessageType = 'bot' | 'user'
-
-export interface MessageBase<T> {
-  text: string
-  meta?: T
-}
-
-export interface MessageBot<T> extends MessageBase<T> {
-  type: 'bot'
-}
-
-export interface MessageUser<T> extends MessageBase<T> {
-  type: 'user'
-}
-
-export type Message<T> = MessageBot<T> | MessageUser<T>
-
-export interface MessageCollection<T, M extends MessageBase<T>> {
-  [timestamp: number]: M
-}
+import {
+  getNextFreeTimestamp,
+  Message,
+  MessageBot,
+  MessageCollection,
+  MessageUser,
+} from './utils/message'
 
 export type ConversationBotState = 'idle' | 'reacting'
 
@@ -34,26 +20,6 @@ export interface Conversation<T = unknown> {
   botMessages: MessageCollection<T, MessageBot<T>>
   userMessages: MessageCollection<T, MessageUser<T>>
 }
-
-interface ConversationContextType<T> {
-  conversation: Conversation<T>
-  dispatch: React.Dispatch<ConversationAction<T>>
-}
-
-function throwProviderError() {
-  throw new Error('ConversationContext: Provider is missing!')
-}
-
-export const ConversationContext = React.createContext<
-  ConversationContextType<unknown>
->({
-  conversation: {
-    botState: 'idle',
-    botMessages: {},
-    userMessages: {},
-  },
-  dispatch: throwProviderError,
-})
 
 interface MessageSendAction<T> {
   type: 'messageSend'
@@ -94,35 +60,30 @@ type ConversationAction<T> =
   | MessageClearAction
   | ConversationBotStateSetAction
 
-function getNextFreeTimestamp(
-  botMessages: MessageCollection<unknown, MessageBot<unknown>>,
-  userMessages: MessageCollection<unknown, MessageUser<unknown>>,
-): number {
-  const now = new Date()
-
-  let currentTimestamp = now.valueOf()
-
-  let message: Message<unknown> | undefined =
-    userMessages[currentTimestamp] || botMessages[currentTimestamp]
-
-  if (!message) {
-    return currentTimestamp
-  }
-
-  while (message) {
-    now.setMilliseconds(now.getMilliseconds() + 1)
-    currentTimestamp = now.valueOf()
-
-    message = userMessages[currentTimestamp] || botMessages[currentTimestamp]
-  }
-
-  return currentTimestamp
+interface ConversationContextType<T> {
+  conversation: Conversation<T>
+  dispatch: React.Dispatch<ConversationAction<T>>
 }
+
+function throwProviderError() {
+  throw new Error('ConversationContext: Provider is missing!')
+}
+
+export const ConversationContext = createContext<
+  ConversationContextType<unknown>
+>({
+  conversation: {
+    botState: 'idle',
+    botMessages: {},
+    userMessages: {},
+  },
+  dispatch: throwProviderError,
+})
 
 function ConversationProvider<T>({
   children,
 }: React.PropsWithChildren<unknown>) {
-  const [conversation, dispatch] = React.useReducer(
+  const [conversation, dispatch] = useReducer(
     (state: Conversation<T>, action: ConversationAction<T>) => {
       switch (action.type) {
         case 'messageSend':
@@ -230,7 +191,7 @@ function ConversationProvider<T>({
   )
 }
 
-const MemoizedConversationProvider = React.memo(
+const MemoizedConversationProvider = memo(
   ConversationProvider,
 ) as typeof ConversationProvider
 

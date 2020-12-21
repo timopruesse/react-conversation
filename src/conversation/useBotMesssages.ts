@@ -1,17 +1,19 @@
-import React from 'react'
-import { MessageCollection, MessageBot, ConversationContext } from './context'
+import { useContext } from 'react'
+import { ConversationContext } from './context'
+import { MessageBot, MessageCollection } from './utils/message'
 
 export function useBotMessages<T>(): MessageCollection<T, MessageBot<T>> {
   const {
     conversation: { botMessages },
-  } = React.useContext(ConversationContext)
+  } = useContext(ConversationContext)
 
   return Object.keys(botMessages)
     .sort()
-    .reduce((previous, current) => {
-      return {
+    .reduce(
+      (previous, current) => ({
         ...previous,
         [current]: botMessages[current],
-      }
-    }, {})
+      }),
+      {},
+    )
 }

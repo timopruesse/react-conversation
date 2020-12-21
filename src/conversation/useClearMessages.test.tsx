@@ -1,15 +1,10 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
 import mockDate from 'mockdate'
 import { useSendMessage } from './useSendMessage'
-import {
-  Message,
-  MessageUser,
-  ConversationProvider,
-  MessageCollection,
-} from './context'
+import { ConversationProvider } from './context'
 import { useMessages } from './useMessages'
 import { useClearMessages } from './useClearMessages'
+import { Message, MessageCollection, MessageUser } from './utils/message'
 
 describe('useClearMessages', () => {
   it('clears range of messages', () => {

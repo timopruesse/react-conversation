@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo, useCallback, useState } from 'react'
 import {
   useEditMessage,
   useMessages,
@@ -11,24 +11,24 @@ const EditForm = () => {
   const editMessage = useEditMessage<MessageMetadata>()
   const clearMessages = useClearMessages()
 
-  const [text, setText] = React.useState('')
-  const onChangeText = React.useCallback((event) => {
+  const [text, setText] = useState('')
+  const onChangeText = useCallback((event) => {
     setText(event.target.value)
   }, [])
 
-  const [selectedTimestamp, setSelectedTimestamp] = React.useState<
-    number | null
-  >(null)
-  const onChangeMessage = React.useCallback((event) => {
+  const [selectedTimestamp, setSelectedTimestamp] = useState<number | null>(
+    null,
+  )
+  const onChangeMessage = useCallback((event) => {
     setSelectedTimestamp(event.target.value)
   }, [])
 
-  const [mood, setMood] = React.useState<MessageMetadata['mood']>('happy')
-  const onChangeMood = React.useCallback((event) => {
+  const [mood, setMood] = useState<MessageMetadata['mood']>('happy')
+  const onChangeMood = useCallback((event) => {
     setMood(event.target.value)
   }, [])
 
-  const onEdit = React.useCallback(
+  const onEdit = useCallback(
     (event) => {
       event.preventDefault()
 
@@ -46,7 +46,7 @@ const EditForm = () => {
     [selectedTimestamp, editMessage, text, mood],
   )
 
-  const onDelete = React.useCallback(() => {
+  const onDelete = useCallback(() => {
     if (!selectedTimestamp) {
       return
     }
@@ -105,4 +105,4 @@ const EditForm = () => {
   )
 }
 
-export default React.memo(EditForm)
+export default memo(EditForm)

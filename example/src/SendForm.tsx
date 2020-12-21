@@ -1,26 +1,26 @@
-import React from 'react'
+import { memo, useCallback, useState } from 'react'
 import { MessageType, useSendMessage } from 'react-conversation'
 import { MessageMetadata } from '.'
 
 const SendForm = () => {
   const sendMessage = useSendMessage<MessageMetadata>()
 
-  const [text, setText] = React.useState('')
-  const onChangeText = React.useCallback((event) => {
+  const [text, setText] = useState('')
+  const onChangeText = useCallback((event) => {
     setText(event.target.value)
   }, [])
 
-  const [type, setType] = React.useState<MessageType>('user')
-  const onChangeType = React.useCallback((event) => {
+  const [type, setType] = useState<MessageType>('user')
+  const onChangeType = useCallback((event) => {
     setType(event.target.value)
   }, [])
 
-  const [mood, setMood] = React.useState<MessageMetadata['mood']>('happy')
-  const onChangeMood = React.useCallback((event) => {
+  const [mood, setMood] = useState<MessageMetadata['mood']>('happy')
+  const onChangeMood = useCallback((event) => {
     setMood(event.target.value)
   }, [])
 
-  const onSend = React.useCallback(
+  const onSend = useCallback(
     (event) => {
       event.preventDefault()
 
@@ -67,4 +67,4 @@ const SendForm = () => {
   )
 }
 
-export default React.memo(SendForm)
+export default memo(SendForm)

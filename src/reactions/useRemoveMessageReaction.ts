@@ -1,8 +1,8 @@
-import React from 'react'
+import { useContext } from 'react'
 import { MessageReactionContext } from './context'
 
 export function useRemoveMessageReaction() {
-  const { dispatch } = React.useContext(MessageReactionContext)
+  const { dispatch } = useContext(MessageReactionContext)
 
   return (key: string, reactionKey: React.Key) =>
     dispatch({

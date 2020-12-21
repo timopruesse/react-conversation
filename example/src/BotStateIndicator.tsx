@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 import { useBotState } from 'react-conversation'
 
 const BotStateIndicator = () => {
@@ -22,4 +22,4 @@ const BotStateIndicator = () => {
   )
 }
 
-export default React.memo(BotStateIndicator)
+export default memo(BotStateIndicator)

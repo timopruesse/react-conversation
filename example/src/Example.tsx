@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   useMessages,
   MessageBot,
@@ -6,6 +5,7 @@ import {
   useOnUserMessage,
   MessageUser,
 } from 'react-conversation'
+import { memo, useState } from 'react'
 import UserMessage from './UserMessage'
 import BotMessage from './BotMessage'
 import SendForm from './SendForm'
@@ -16,12 +16,14 @@ import BotStateIndicator from './BotStateIndicator'
 const Example = () => {
   const messages = useMessages<MessageMetadata>()
 
-  const [lastBotMessage, setLastBotMessage] = React.useState<MessageBot<
-    MessageMetadata
-  > | null>(null)
-  const [lastUserMessage, setLastUserMessage] = React.useState<MessageUser<
-    MessageMetadata
-  > | null>(null)
+  const [
+    lastBotMessage,
+    setLastBotMessage,
+  ] = useState<MessageBot<MessageMetadata> | null>(null)
+  const [
+    lastUserMessage,
+    setLastUserMessage,
+  ] = useState<MessageUser<MessageMetadata> | null>(null)
 
   useOnBotMessage(setLastBotMessage)
   useOnUserMessage(setLastUserMessage)
@@ -110,4 +112,4 @@ const Example = () => {
   )
 }
 
-export default React.memo(Example)
+export default memo(Example)

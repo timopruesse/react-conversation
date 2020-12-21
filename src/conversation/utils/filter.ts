@@ -8,19 +8,21 @@ export function filterConversation<T>(
     botState,
     botMessages: Object.keys(botMessages)
       .filter(filterFn)
-      .reduce((previous, current) => {
-        return {
+      .reduce(
+        (previous, current) => ({
           ...previous,
           [current]: botMessages[current],
-        }
-      }, {}),
+        }),
+        {},
+      ),
     userMessages: Object.keys(userMessages)
       .filter(filterFn)
-      .reduce((previous, current) => {
-        return {
+      .reduce(
+        (previous, current) => ({
           ...previous,
           [current]: userMessages[current],
-        }
-      }, {}),
+        }),
+        {},
+      ),
   }
 }

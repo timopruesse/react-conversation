@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
 import { ConversationProvider, ConversationBotState } from './context'
 import { useSetBotState } from './useSetBotState'
@@ -11,7 +10,7 @@ const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
 describe('useSetBotState', () => {
   it('sets correct bot state', () => {
     let state: ConversationBotState | undefined
-    let setState: ((state: ConversationBotState) => void) | undefined
+    let setState: ((s: ConversationBotState) => void) | undefined
 
     const Component = () => {
       state = useBotState()

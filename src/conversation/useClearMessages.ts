@@ -1,8 +1,8 @@
-import React from 'react'
+import { useContext } from 'react'
 import { ConversationContext } from './context'
 
 export function useClearMessages() {
-  const { dispatch } = React.useContext(ConversationContext)
+  const { dispatch } = useContext(ConversationContext)
 
   return (start: number, end?: number) =>
     dispatch({

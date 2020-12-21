@@ -1,9 +1,6 @@
-import React from 'react'
-import {
-  ConversationContext,
-  MessageBot,
-  ConversationBotState,
-} from './context'
+import { useContext, useEffect } from 'react'
+import { ConversationContext, ConversationBotState } from './context'
+import { MessageBot } from './utils/message'
 
 type OnBotMessage<T> = (
   message: MessageBot<T>,
@@ -11,9 +8,9 @@ type OnBotMessage<T> = (
 ) => void
 
 export function useOnBotMessage<T>(onBotMessage: OnBotMessage<T>) {
-  const { conversation } = React.useContext(ConversationContext)
+  const { conversation } = useContext(ConversationContext)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const botMessageCount = Object.keys(conversation.botMessages).length
     if (botMessageCount === 0) {
       return

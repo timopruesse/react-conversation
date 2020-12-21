@@ -1,16 +1,10 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
 import mockDate from 'mockdate'
 import { useSendMessage } from './useSendMessage'
-import {
-  Message,
-  MessageUser,
-  ConversationProvider,
-  MessageUpdate,
-  MessageCollection,
-} from './context'
+import { ConversationProvider, MessageUpdate } from './context'
 import { useEditMessage } from './useEditMessage'
 import { useMessages } from './useMessages'
+import { Message, MessageCollection, MessageUser } from './utils/message'
 
 describe('useEditMessage', () => {
   it('updates message', () => {
@@ -20,9 +14,7 @@ describe('useEditMessage', () => {
 
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
     let send: ((message: Message<unknown>) => void) | undefined
-    let edit:
-      | ((timestamp: number, update: MessageUpdate<unknown>) => void)
-      | undefined
+    let edit: ((ts: number, update: MessageUpdate<unknown>) => void) | undefined
 
     const Component = () => {
       messages = useMessages()

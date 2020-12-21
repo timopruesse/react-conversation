@@ -1,17 +1,16 @@
 /* eslint-disable no-console */
-import React from 'react'
 import { render, act } from '@testing-library/react'
 import mockDate from 'mockdate'
-import {
-  ConversationContext,
-  MessageCollection,
-  Message,
-  MessageUser,
-  ConversationProvider,
-  MessageBot,
-} from './context'
+import { useContext, useEffect } from 'react'
+import { ConversationContext, ConversationProvider } from './context'
 import { useMessages } from './useMessages'
 import { useSendMessage } from './useSendMessage'
+import {
+  Message,
+  MessageBot,
+  MessageCollection,
+  MessageUser,
+} from './utils/message'
 
 describe('context', () => {
   it('throws error when not provider is defined', () => {
@@ -19,9 +18,9 @@ describe('context', () => {
     console.error = jest.fn()
 
     const Component = () => {
-      const { dispatch } = React.useContext(ConversationContext)
+      const { dispatch } = useContext(ConversationContext)
 
-      React.useEffect(() => {
+      useEffect(() => {
         dispatch({
           type: 'messageSend',
           payload: {

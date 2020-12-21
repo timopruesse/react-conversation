@@ -1,13 +1,8 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
 import { useSendMessage } from './useSendMessage'
-import {
-  Message,
-  MessageBot,
-  ConversationProvider,
-  MessageUser,
-} from './context'
+import { ConversationProvider } from './context'
 import { useOnBotMessage } from './useOnBotMessage'
+import { Message, MessageBot, MessageUser } from './utils/message'
 
 describe('useOnBotMessage', () => {
   it('listens to bot messages', () => {

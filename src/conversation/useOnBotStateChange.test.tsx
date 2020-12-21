@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, act } from '@testing-library/react'
 import { ConversationProvider, ConversationBotState } from './context'
 import { useOnBotStateChange } from './useOnBotStateChange'
