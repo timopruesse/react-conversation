@@ -1,4 +1,12 @@
 /** Conversation */
+export type {
+  Message,
+  MessageBase,
+  MessageBot,
+  MessageCollection,
+  MessageType,
+  MessageUser,
+} from './conversation/utils/message'
 export * from './conversation/context'
 export { useMessages } from './conversation/useMessages'
 export { useSendMessage } from './conversation/useSendMessage'
