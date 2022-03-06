@@ -17,7 +17,7 @@ describe('context', () => {
     const originalError = console.error
     console.error = jest.fn()
 
-    const Component = () => {
+    function Component() {
       const { dispatch } = useContext(ConversationContext)
 
       useEffect(() => {
@@ -46,7 +46,7 @@ describe('context', () => {
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
     let send: ((message: Message<unknown>) => void) | undefined
 
-    const Component = () => {
+    function Component() {
       messages = useMessages()
       send = useSendMessage()
 

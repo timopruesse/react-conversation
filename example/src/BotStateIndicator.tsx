@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { useBotState } from 'react-conversation'
 
-const BotStateIndicator = () => {
+const BotStateIndicator = memo(() => {
   const botState = useBotState()
 
   if (botState === 'idle') {
@@ -20,6 +20,8 @@ const BotStateIndicator = () => {
       🤔 Bot is thinking ...
     </div>
   )
-}
+})
 
-export default memo(BotStateIndicator)
+BotStateIndicator.displayName = 'BotStateIndicator'
+
+export default BotStateIndicator

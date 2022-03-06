@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { useMemo } from 'react'
 import { Conversation, ConversationContext } from './context'
 import { useBotMessages } from './useBotMesssages'
 import { MessageBot, MessageCollection } from './utils/message'
@@ -27,19 +28,24 @@ const unorderedConversation: Conversation<unknown> = {
   },
 }
 
-const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
-  <ConversationContext.Provider
-    value={{ conversation: unorderedConversation, dispatch: () => null }}
-  >
-    {children}
-  </ConversationContext.Provider>
-)
+function TestProvider({ children }: React.PropsWithChildren<unknown>) {
+  const value = useMemo(
+    () => ({ conversation: unorderedConversation, dispatch: () => null }),
+    [],
+  )
+
+  return (
+    <ConversationContext.Provider value={value}>
+      {children}
+    </ConversationContext.Provider>
+  )
+}
 
 describe('useBotMessages', () => {
   it('gets the bot messages in the correct order', () => {
     let botMessages: MessageCollection<unknown, MessageBot<unknown>> | undefined
 
-    const Component = () => {
+    function Component() {
       botMessages = useBotMessages()
 
       return null

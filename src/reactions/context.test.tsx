@@ -9,11 +9,13 @@ import { useSendMessage } from '../conversation/useSendMessage'
 import { useSetBotState } from '../conversation/useSetBotState'
 import { Message, MessageUser } from '../conversation/utils/message'
 
-const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
-  <ConversationProvider>
-    <MessageReactionProvider>{children}</MessageReactionProvider>
-  </ConversationProvider>
-)
+function TestProvider({ children }: React.PropsWithChildren<unknown>) {
+  return (
+    <ConversationProvider>
+      <MessageReactionProvider>{children}</MessageReactionProvider>
+    </ConversationProvider>
+  )
+}
 
 describe('Message Reactions', () => {
   it('reacts to messages correctly', () => {
@@ -35,7 +37,7 @@ describe('Message Reactions', () => {
     }
 
     act(() => {
-      const Component = () => {
+      function Component() {
         send = useSendMessage()
         addReaction = useAddMessageReaction()
 
@@ -93,7 +95,7 @@ describe('Message Reactions', () => {
     }
 
     act(() => {
-      const Component = () => {
+      function Component() {
         send = useSendMessage()
         addReaction = useAddMessageReaction()
 

@@ -12,7 +12,7 @@ describe('useClearMessages', () => {
     let send: ((message: Message<unknown>) => void) | undefined
     let clear: ((start: number, end?: number) => void) | undefined
 
-    const Component = () => {
+    function Component() {
       messages = useMessages()
       send = useSendMessage()
       clear = useClearMessages()

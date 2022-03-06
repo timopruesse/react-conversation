@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react'
 import { MessageType, useSendMessage } from 'react-conversation'
 import { MessageMetadata } from '.'
 
-const SendForm = () => {
+const SendForm = memo(() => {
   const sendMessage = useSendMessage<MessageMetadata>()
 
   const [text, setText] = useState('')
@@ -65,6 +65,8 @@ const SendForm = () => {
       </button>
     </form>
   )
-}
+})
 
-export default memo(SendForm)
+SendForm.displayName = 'SendForm'
+
+export default SendForm

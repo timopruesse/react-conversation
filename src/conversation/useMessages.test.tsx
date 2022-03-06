@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { useMemo } from 'react'
 import { useMessages } from './useMessages'
 import { Conversation, ConversationContext } from './context'
 import { Message, MessageCollection } from './utils/message'
@@ -27,19 +28,24 @@ const unorderedConversation: Conversation<unknown> = {
   },
 }
 
-const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
-  <ConversationContext.Provider
-    value={{ conversation: unorderedConversation, dispatch: () => null }}
-  >
-    {children}
-  </ConversationContext.Provider>
-)
+function TestProvider({ children }: React.PropsWithChildren<unknown>) {
+  const value = useMemo(
+    () => ({ conversation: unorderedConversation, dispatch: () => null }),
+    [],
+  )
+
+  return (
+    <ConversationContext.Provider value={value}>
+      {children}
+    </ConversationContext.Provider>
+  )
+}
 
 describe('useMessages', () => {
   it('gets all of the messages in the correct order', () => {
     let messages: MessageCollection<unknown, Message<unknown>> | undefined
 
-    const Component = () => {
+    function Component() {
       messages = useMessages()
 
       return null

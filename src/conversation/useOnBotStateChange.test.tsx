@@ -9,7 +9,7 @@ describe('useOnUserMessage', () => {
 
     const onStateChange = jest.fn()
 
-    const Component = () => {
+    function Component() {
       setState = useSetBotState()
       useOnBotStateChange(onStateChange)
 

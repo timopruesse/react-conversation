@@ -8,7 +8,7 @@ interface Props {
   message: MessageBot<MessageMetadata>
 }
 
-const BotMessage = ({ timestamp, message: { text, meta } }: Props) => (
+const BotMessage = memo(({ timestamp, message: { text, meta } }: Props) => (
   <div
     style={{
       alignSelf: 'flex-end',
@@ -44,6 +44,8 @@ const BotMessage = ({ timestamp, message: { text, meta } }: Props) => (
     </div>
     <img src={BotIcon} alt="Bot icon" style={{ height: 80 }} />
   </div>
-)
+))
 
-export default memo(BotMessage)
+BotMessage.displayName = 'BotMessage'
+
+export default BotMessage

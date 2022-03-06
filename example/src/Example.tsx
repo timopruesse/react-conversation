@@ -13,17 +13,14 @@ import EditForm from './EditForm'
 import { MessageMetadata } from '.'
 import BotStateIndicator from './BotStateIndicator'
 
-const Example = () => {
+const Example = memo(() => {
   const messages = useMessages<MessageMetadata>()
 
-  const [
-    lastBotMessage,
-    setLastBotMessage,
-  ] = useState<MessageBot<MessageMetadata> | null>(null)
-  const [
-    lastUserMessage,
-    setLastUserMessage,
-  ] = useState<MessageUser<MessageMetadata> | null>(null)
+  const [lastBotMessage, setLastBotMessage] =
+    useState<MessageBot<MessageMetadata> | null>(null)
+
+  const [lastUserMessage, setLastUserMessage] =
+    useState<MessageUser<MessageMetadata> | null>(null)
 
   useOnBotMessage(setLastBotMessage)
   useOnUserMessage(setLastUserMessage)
@@ -110,6 +107,8 @@ const Example = () => {
       </div>
     </div>
   )
-}
+})
 
-export default memo(Example)
+Example.displayName = 'Example'
+
+export default Example

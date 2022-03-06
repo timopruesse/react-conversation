@@ -6,6 +6,9 @@ module.exports = {
   entry: './src/index.tsx',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      react: path.resolve('../node_modules/react'),
+    },
   },
   output: {
     path: path.join(__dirname, '/dist'),

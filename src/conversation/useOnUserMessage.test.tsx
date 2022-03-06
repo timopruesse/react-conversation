@@ -10,7 +10,7 @@ describe('useOnUserMessage', () => {
 
     const onUserMessage = jest.fn()
 
-    const Component = () => {
+    function Component() {
       send = useSendMessage()
       useOnUserMessage(onUserMessage)
 
@@ -47,7 +47,7 @@ describe('useOnUserMessage', () => {
 
     const onUserMessage = jest.fn()
 
-    const Component = () => {
+    function Component() {
       send = useSendMessage()
       useOnUserMessage(onUserMessage)
 

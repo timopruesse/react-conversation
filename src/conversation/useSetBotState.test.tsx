@@ -3,16 +3,16 @@ import { ConversationProvider, ConversationBotState } from './context'
 import { useSetBotState } from './useSetBotState'
 import { useBotState } from './useBotState'
 
-const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
-  <ConversationProvider>{children}</ConversationProvider>
-)
+function TestProvider({ children }: React.PropsWithChildren<unknown>) {
+  return <ConversationProvider>{children}</ConversationProvider>
+}
 
 describe('useSetBotState', () => {
   it('sets correct bot state', () => {
     let state: ConversationBotState | undefined
     let setState: ((s: ConversationBotState) => void) | undefined
 
-    const Component = () => {
+    function Component() {
       state = useBotState()
       setState = useSetBotState()
 

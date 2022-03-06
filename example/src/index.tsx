@@ -11,7 +11,9 @@ export interface MessageMetadata {
 }
 
 const someCoolApiCall = (msDuration: number) =>
-  new Promise((resolve) => setTimeout(resolve, msDuration))
+  new Promise((resolve) => {
+    setTimeout(resolve, msDuration)
+  })
 
 const exampleReactions: MessageReactionCollection<MessageMetadata> = {
   'meta.mood': {

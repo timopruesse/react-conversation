@@ -2,21 +2,13 @@
 
 [![NPM](https://img.shields.io/npm/v/react-conversation.svg)](https://www.npmjs.com/package/react-conversation)
 
-> This package only includes react hooks that you can use in your own components.  
-> There are no UI components in here.  
+> This package only includes react hooks that you can use in your own components.
+> There are no UI components in here.
 > Check out the example app for some 'inspiration' 😁
 
 ---
 
 ## Installation
-
-### Yarn
-
-```bash
-yarn add react-conversation
-```
-
-### NPM
 
 ```bash
 npm install react-conversation
@@ -57,7 +49,7 @@ const message = {
 
 #### Message timestamps
 
-The timestamps of the messages are unique and also serve as their identifier.  
+The timestamps of the messages are unique and also serve as their identifier.
 If you send multiple messages at the same time, the timestamp of subsequent messages will be increased by one millisecond.
 
 ##### Example
@@ -74,7 +66,7 @@ If three messages get sent at `1595441078505` their timestamps will be the follo
 
 #### Metadata
 
-The messages can carry any form of metadata.  
+The messages can carry any form of metadata.
 In the examples `MessageMetadata` will be used as a placeholder.
 
 ---
@@ -161,7 +153,7 @@ useOnUserMessage(
 
 #### Edit a message
 
-It is possible to update the text or the metadata of a message (or both at the same time).  
+It is possible to update the text or the metadata of a message (or both at the same time).
 You need to provide the timestamp of the message you want to edit.
 
 ```ts
@@ -307,12 +299,12 @@ clearMessages(100)
 
 ### Example app
 
-There is a small example app where you can see the hooks in action.  
+There is a small example app where you can see the hooks in action.
 Feel free to check out the source code to see how it works.
 
-1. Execute `yarn build` in the root directory
+1. Execute `npm run build` in the root directory
 2. `cd example`
-3. Execute `yarn start`
-4. Open `localhost:5000` in any browser
+3. Execute `npm run start`
+4. Open `localhost:3000` in any browser
 
 > Try to send a user message with an angry tone ;)

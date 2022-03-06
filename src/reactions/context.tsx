@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { pick } from 'dot-object'
-import { createContext, memo, useReducer } from 'react'
+import { createContext, memo, useMemo, useReducer } from 'react'
 import { ConversationBotState } from '../conversation/context'
 import { useOnUserMessage } from '../conversation/useOnUserMessage'
 import { useSendMessage } from '../conversation/useSendMessage'
@@ -141,13 +141,16 @@ function MessageReactionProvider<T>({
     },
   )
 
+  const value = useMemo(
+    () => ({
+      reactions,
+      dispatch,
+    }),
+    [reactions, dispatch],
+  )
+
   return (
-    <MessageReactionContext.Provider
-      value={{
-        reactions,
-        dispatch,
-      }}
-    >
+    <MessageReactionContext.Provider value={value}>
       {children}
     </MessageReactionContext.Provider>
   )

@@ -6,7 +6,7 @@ import {
 } from 'react-conversation'
 import { MessageMetadata } from '.'
 
-const EditForm = () => {
+const EditForm = memo(() => {
   const messages = useMessages<MessageMetadata>()
   const editMessage = useEditMessage<MessageMetadata>()
   const clearMessages = useClearMessages()
@@ -103,6 +103,8 @@ const EditForm = () => {
       </button>
     </form>
   )
-}
+})
 
-export default memo(EditForm)
+EditForm.displayName = 'EditForm'
+
+export default EditForm

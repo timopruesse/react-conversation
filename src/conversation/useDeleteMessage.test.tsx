@@ -12,7 +12,7 @@ describe('useDeleteMessage', () => {
     let send: ((message: Message<unknown>) => void) | undefined
     let deleteMsg: ((timestamp: number) => void) | undefined
 
-    const Component = () => {
+    function Component() {
       messages = useMessages()
       send = useSendMessage()
       deleteMsg = useDeleteMessage()

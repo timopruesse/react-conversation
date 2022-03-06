@@ -10,7 +10,7 @@ describe('useOnBotMessage', () => {
 
     const onBotMessage = jest.fn()
 
-    const Component = () => {
+    function Component() {
       send = useSendMessage()
       useOnBotMessage(onBotMessage)
 
@@ -47,7 +47,7 @@ describe('useOnBotMessage', () => {
 
     const onBotMessage = jest.fn()
 
-    const Component = () => {
+    function Component() {
       send = useSendMessage()
       useOnBotMessage(onBotMessage)
 

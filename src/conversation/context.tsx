@@ -1,4 +1,4 @@
-import { createContext, memo, useReducer } from 'react'
+import { createContext, memo, useMemo, useReducer } from 'react'
 import { filterConversation } from './utils/filter'
 import {
   getNextFreeTimestamp,
@@ -177,15 +177,17 @@ function ConversationProvider<T>({
     { botState: 'idle', botMessages: {}, userMessages: {} },
   )
 
-  const value = {
-    conversation,
-    dispatch,
-  }
+  const value = useMemo(
+    () =>
+      ({
+        conversation,
+        dispatch,
+      } as ConversationContextType<unknown>),
+    [conversation, dispatch],
+  )
 
   return (
-    <ConversationContext.Provider
-      value={value as ConversationContextType<unknown>}
-    >
+    <ConversationContext.Provider value={value}>
       {children}
     </ConversationContext.Provider>
   )

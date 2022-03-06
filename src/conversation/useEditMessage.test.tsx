@@ -16,7 +16,7 @@ describe('useEditMessage', () => {
     let send: ((message: Message<unknown>) => void) | undefined
     let edit: ((ts: number, update: MessageUpdate<unknown>) => void) | undefined
 
-    const Component = () => {
+    function Component() {
       messages = useMessages()
       send = useSendMessage()
       edit = useEditMessage()

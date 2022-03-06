@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { useMemo } from 'react'
 import { useSendMessage } from './useSendMessage'
 import { Conversation, ConversationContext } from './context'
 import { Message, MessageBot, MessageUser } from './utils/message'
@@ -11,13 +12,18 @@ const emptyConversation: Conversation<unknown> = {
 
 const messageDispatcher = jest.fn()
 
-const TestProvider = ({ children }: React.PropsWithChildren<unknown>) => (
-  <ConversationContext.Provider
-    value={{ conversation: emptyConversation, dispatch: messageDispatcher }}
-  >
-    {children}
-  </ConversationContext.Provider>
-)
+function TestProvider({ children }: React.PropsWithChildren<unknown>) {
+  const value = useMemo(
+    () => ({ conversation: emptyConversation, dispatch: messageDispatcher }),
+    [],
+  )
+
+  return (
+    <ConversationContext.Provider value={value}>
+      {children}
+    </ConversationContext.Provider>
+  )
+}
 
 describe('useSendMessage', () => {
   beforeEach(() => {
@@ -27,7 +33,7 @@ describe('useSendMessage', () => {
   it('sends message', () => {
     let send: ((message: Message<unknown>) => void) | undefined
 
-    const Component = () => {
+    function Component() {
       send = useSendMessage()
 
       return null
