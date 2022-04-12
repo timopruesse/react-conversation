@@ -51,7 +51,7 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@types/dot-object": "^2.1.2",
     "@types/jest": "^27.0.1",
-    "@types/react": "^17",
+    "@types/react": "^18",
     "@types/react-dom": "^17",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
